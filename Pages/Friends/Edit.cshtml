@@ -1,0 +1,40 @@
+@page
+@model RemindMeal.Pages.Friends.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Friend</h4>
+<hr/>
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Friend.Id"/>
+            <div class="form-group">
+                <label asp-for="Friend.Name" class="control-label"></label>
+                <input asp-for="Friend.Name" class="form-control"/>
+                <span asp-validation-for="Friend.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Friend.Surname" class="control-label"></label>
+                <input asp-for="Friend.Surname" class="form-control"/>
+                <span asp-validation-for="Friend.Surname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

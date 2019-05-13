@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  app:
+    image: edouardberthe/remindmeal:latest
+    ports:
+      - 80:80
+    depends_on:
+      - db
+  db:
+    image: postgres:alpine
+    ports:
+      - 5432:5432
+    volumes:
+      - data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: remindmeal
+      POSTGRES_PASSWORD: remindmeal
+      POSTGRES_DB: remindmeal
+
+volumes:
+  data:

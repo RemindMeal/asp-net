@@ -1,0 +1,44 @@
+@page
+@model RemindMeal.Pages.Meals.IndexModel
+
+@{
+    ViewData["Title"] = "Repas";
+}
+
+<h1>Vos repas</h1>
+
+<p>
+    <a asp-page="Create" class="btn btn-success">Enregistrer un nouveau repas</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Meals[0].Date)
+            </th>
+            <th>Invités</th>
+            <th>Menu</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Meals) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @string.Join(",", item.Presences.Select(p => p.Friend.FullName))
+            </td>
+            <td>
+                @string.Join(",", item.Cookings.Select(c => c.Recipe.Name))
+            </td>
+            <td>
+                <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-primary">Détails</a>
+                <a asp-page="./Edit"    asp-route-id="@item.Id" class="btn btn-success">Modifier</a>
+                <a asp-page="./Delete"  asp-route-id="@item.Id" class="btn btn-danger">Supprimer</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

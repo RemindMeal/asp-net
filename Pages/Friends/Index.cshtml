@@ -1,0 +1,42 @@
+@page
+@model RemindMeal.Pages.Friends.IndexModel
+
+@{
+    ViewData["Title"] = "Invités";
+}
+
+<h1>Liste de vos invités</h1>
+
+<p>
+    <a asp-page="Create" class="btn btn-success">Créer un nouvel invité</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Friend[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Friend[0].Surname)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Friend) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Surname)
+            </td>
+            <td>
+                <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-primary">Détails</a>
+                <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-warning">Modifier</a>
+                <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-danger">Supprimer</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

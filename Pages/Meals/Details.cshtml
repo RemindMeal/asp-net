@@ -1,0 +1,40 @@
+@page
+@model RemindMeal.Pages.Meals.DetailsModel
+
+@{
+    ViewData["Title"] = "Repas";
+}
+
+<h1>Page de détails de repas</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Meal.Date)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Meal.Date)
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Meal.Friends)
+        </dt>
+        <dd class="col-sm-10">
+            @string.Join(", ", Model.Meal.Friends)
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Meal.Recipes)
+        </dt>
+        <dd class="col-sm-10">
+            @string.Join(", ", Model.Meal.Recipes)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Meal.Id" class="btn btn-success">Modifier</a> |
+    <a asp-page="./Index" class="btn btn-info">Retour à la liste</a>
+</div>
