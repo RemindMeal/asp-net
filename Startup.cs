@@ -1,4 +1,5 @@
 using System;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
@@ -11,6 +12,8 @@ using Microsoft.EntityFrameworkCore;
 using RemindMeal.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using RemindMeal.Models;
+using RemindMeal.Services;
 
 namespace RemindMeal
 {
@@ -21,7 +24,7 @@ namespace RemindMeal
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -42,9 +45,7 @@ namespace RemindMeal
             });
             
             // Identity
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddDefaultUI(UIFramework.Bootstrap4)
-                .AddEntityFrameworkStores<RemindMealContext>();
+            services.AddDefaultIdentity<User>().AddDefaultUI(UIFramework.Bootstrap4).AddEntityFrameworkStores<RemindMealContext>();
             services.Configure<IdentityOptions>(options =>
             {
                 // Default Password settings.
@@ -58,11 +59,18 @@ namespace RemindMeal
 
             services.AddMvc(options =>
                 {
+                    // Authentication by default on all pages
                     var policy = new AuthorizationPolicyBuilder()
                         .RequireAuthenticatedUser()
                         .Build();
                     options.Filters.Add(new AuthorizeFilter(policy));
                 }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            
+            // AutoMapper for mapping between Models <--> ViewModels
+            services.AddAutoMapper(typeof(Startup));
+            
+            // User Resolver
+            services.AddSingleton<IUserResolverService, UserResolverService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace RemindMeal.Models
 {
-    public sealed class Meal
+    public sealed class Meal : IHasUser
     {
         public Meal()
         {
@@ -18,10 +18,11 @@ namespace RemindMeal.Models
         public int Id { get; set; }
 
         [DataType(DataType.Date)]
-        [Display(Name = "Date")]
         public DateTime Date { get; set; }
 
         // Relationships
+        [Required]
+        public User User { get; set; }
         public ICollection<Presence> Presences { get; }
         public ICollection<Cooking> Cookings { get; }
 

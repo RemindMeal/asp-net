@@ -1,20 +1,35 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using RemindMeal.Models;
+using RemindMeal.Services;
 
 namespace RemindMeal.Data
 {
-    public class RemindMealContext : IdentityDbContext
+    public class RemindMealContext : IdentityDbContext<User>
     {
+        private readonly IUserResolverService _userResolverService;
+
+        public RemindMealContext(DbContextOptions<RemindMealContext> options, IUserResolverService userResolverService)
+            : base(options)
+        {
+            _userResolverService = userResolverService;
+        }
+        
         public DbSet<Recipe> Recipes { get; set; }
         public DbSet<Meal> Meals { get; set; }
         public DbSet<Friend> Friends { get; set; }
         public DbSet<Presence> Participations { get; set; }
         public DbSet<Cooking> Cookings { get; set; }
 
-        public RemindMealContext(DbContextOptions<RemindMealContext> options)
-            : base(options)
+        public User GetCurrentUser()
         {
+            return _userResolverService.GetCurrentSessionUser(this);
         }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)    
@@ -41,6 +56,30 @@ namespace RemindMeal.Data
                 .HasOne(p => p.Meal)
                 .WithMany(m => m.Presences)
                 .HasForeignKey(p => p.MealId);
+
+            modelBuilder.Entity<Recipe>().HasQueryFilter(r => r.User.Id == GetCurrentUser().Id);
+            modelBuilder.Entity<Friend>().HasQueryFilter(f => f.User.Id == GetCurrentUser().Id);
+        }
+
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var user = GetCurrentUser();
+            Console.WriteLine($"We are in {nameof(SaveChangesAsync)} and CurrentUser is {user}");
+            ChangeTracker.DetectChanges();
+            ChangeTracker.ProcessCreation(user);
+            return await base.SaveChangesAsync(true, cancellationToken);
+        }
+    }
+
+    public static class ChangeTrackerExtensions
+    {
+        public static void ProcessCreation(this ChangeTracker changeTracker, User user)
+        {
+            Console.WriteLine($"We are in {nameof(ProcessCreation)}");
+            foreach (var item in changeTracker.Entries<IHasUser>().Where(e => e.State == EntityState.Added))
+            {
+                item.Entity.User = user;
+            }
         }
     }
 }

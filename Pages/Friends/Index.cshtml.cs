@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using RemindMeal.Data;
@@ -10,17 +12,20 @@ namespace RemindMeal.Pages.Friends
     public class IndexModel : PageModel
     {
         private readonly RemindMealContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public IndexModel(RemindMealContext context)
+        public IndexModel(RemindMealContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public IList<Friend> Friend { get;set; }
 
         public async Task OnGetAsync()
         {
-            Friend = await _context.Friends.ToListAsync();
+            var user = await _userManager.GetUserAsync(User);
+            Friend = await _context.Friends.Where(friend => friend.User == user).ToListAsync();
         }
     }
 }

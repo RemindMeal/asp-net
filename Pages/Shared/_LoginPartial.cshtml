@@ -1,5 +1,5 @@
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<RemindMeal.Models.User> SignInManager
+@inject UserManager<RemindMeal.Models.User> UserManager
 
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))

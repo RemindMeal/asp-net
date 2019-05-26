@@ -1,18 +1,24 @@
+using System;
+using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using RemindMeal.Data;
 using RemindMeal.Models;
+using RemindMeal.ModelViews;
 
 namespace RemindMeal.Pages.Friends
 {
     public class CreateModel : PageModel
     {
         private readonly RemindMealContext _context;
+        private readonly IMapper _mapper;
 
-        public CreateModel(RemindMealContext context)
+        public CreateModel(RemindMealContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public IActionResult OnGet()
@@ -21,7 +27,7 @@ namespace RemindMeal.Pages.Friends
         }
 
         [BindProperty]
-        public Friend Friend { get; set; }
+        public FriendModelView FriendMV { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -30,7 +36,8 @@ namespace RemindMeal.Pages.Friends
                 return Page();
             }
 
-            _context.Friends.Add(Friend);
+            var friend = _mapper.Map<Friend>(FriendMV);
+            _context.Friends.Add(friend);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
