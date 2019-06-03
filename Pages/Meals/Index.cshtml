@@ -28,7 +28,7 @@
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
             <td>
-                @string.Join(",", item.Presences.Select(p => p.Friend.FullName))
+                @string.Join(",", item.Presences.Count)
             </td>
             <td>
                 @string.Join(",", item.Cookings.Select(c => c.Recipe.Name))

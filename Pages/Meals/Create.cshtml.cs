@@ -1,19 +1,23 @@
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using RemindMeal.Data;
 using RemindMeal.Models;
+using RemindMeal.ModelViews;
 
 namespace RemindMeal.Pages.Meals
 {
     public sealed class CreateModel : PageModel
     {
         private readonly RemindMealContext _context;
+        private readonly IMapper _mapper;
 
-        public CreateModel(RemindMealContext context)
+        public CreateModel(RemindMealContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public IActionResult OnGet()
@@ -24,7 +28,7 @@ namespace RemindMeal.Pages.Meals
         }
 
         [BindProperty]
-        public Meal Meal { get; set; }
+        public MealModelView Meal { get; set; }
         [BindProperty]
         public int[] SelectedFriends { get; set; }
         public SelectList AvailableFriends { get; set; }
@@ -39,17 +43,18 @@ namespace RemindMeal.Pages.Meals
                 return Page();
             }
 
-            _context.Meals.Add(Meal);
+            var meal = _mapper.Map<Meal>(Meal);
+            _context.Meals.Add(meal);
             foreach (var friendId in SelectedFriends)
             {
                 var friend = _context.Friends.Find(friendId);
-                Meal.Presences.Add(new Presence {Meal = Meal, Friend = friend});
+                meal.Presences.Add(new Presence {Meal = meal, Friend = friend});
             }
 
             foreach (var recipeId in SelectedRecipes)
             {
                 var recipe = _context.Recipes.Find(recipeId);
-                Meal.Cookings.Add(new Cooking {Meal = Meal, Recipe = recipe});
+                meal.Cookings.Add(new Cooking {Meal = meal, Recipe = recipe});
             }
             await _context.SaveChangesAsync();
 

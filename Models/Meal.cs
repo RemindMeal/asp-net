@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -26,12 +27,10 @@ namespace RemindMeal.Models
         public ICollection<Presence> Presences { get; }
         public ICollection<Cooking> Cookings { get; }
 
-        [Display(Name = "Invités")]
         [NotMapped]
-        public ICollection<Friend> Friends => Presences.Select(p => p.Friend).ToList();
+        public ICollection<Friend> Friends => Presences.Select(p => p.Friend).ToImmutableArray();
 
-        [Display(Name = "Menu")]
         [NotMapped]
-        public ICollection<Recipe> Recipes => Cookings.Select(c => c.Recipe).ToList();
+        public ICollection<Recipe> Recipes => Cookings.Select(c => c.Recipe).ToImmutableArray();
     }
 }

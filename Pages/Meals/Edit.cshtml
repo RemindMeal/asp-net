@@ -12,11 +12,29 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Meal.Id" />
+            <input type="hidden" asp-for="MealId" />
             <div class="form-group">
-                <label asp-for="Meal.Date" class="control-label"></label>
-                <input asp-for="Meal.Date" class="form-control" />
-                <span asp-validation-for="Meal.Date" class="text-danger"></span>
+                <label asp-for="MealMV.Date" class="control-label"></label>
+                <input asp-for="MealMV.Date" class="form-control" />
+                <span asp-validation-for="MealMV.Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SelectedFriends" class="control-label">Invités</label>
+                <select
+                    asp-for="SelectedFriends"
+                    asp-items="Model.AvailableFriends"
+                    class="form-control selectpicker"
+                    data-live-search="true">
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="SelectedRecipes" class="control-label">Menu</label>
+                <select
+                    asp-for="SelectedRecipes"
+                    asp-items="Model.AvailableRecipes"
+                    class="form-control selectpicker"
+                    data-live-search="true">
+                </select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

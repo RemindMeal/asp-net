@@ -7,6 +7,7 @@ namespace RemindMeal.ModelViews
 {
     public sealed class MealModelView
     {
+        [DataType(DataType.Date)]
         public DateTime Date { get; set; }
 
         [Display(Name = "Invités")]

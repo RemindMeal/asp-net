@@ -2,26 +2,39 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RemindMeal.Data;
 using RemindMeal.Models;
+using RemindMeal.ModelViews;
 
 namespace RemindMeal.Pages.Meals
 {
     public class EditModel : PageModel
     {
         private readonly RemindMealContext _context;
+        private readonly IMapper mapper;
 
-        public EditModel(RemindMealContext context)
+        public EditModel(RemindMealContext context, IMapper mapper)
         {
             _context = context;
+            this.mapper = mapper;
         }
 
         [BindProperty]
-        public Meal Meal { get; set; }
+        public MealModelView MealMV { get; set; }
+        [BindProperty]
+        public int[] SelectedFriends { get; set; }
+        public SelectList AvailableFriends { get; set; }
+        [BindProperty]
+        public int[] SelectedRecipes { get; set; }
+        public SelectList AvailableRecipes { get; set; }
+
+        [BindProperty]
+        public int MealId { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,9 +43,15 @@ namespace RemindMeal.Pages.Meals
                 return NotFound();
             }
 
-            Meal = await _context.Meals.FirstOrDefaultAsync(m => m.Id == id);
+            var meal = await _context.Meals.FirstOrDefaultAsync(m => m.Id == id);
+            MealMV = mapper.Map<MealModelView>(meal);
+            MealId = meal.Id;
+            SelectedFriends = meal.Friends.Select(friend => friend.Id).ToArray();
+            SelectedRecipes = meal.Recipes.Select(recipe => recipe.Id).ToArray();
+            AvailableFriends = new SelectList(_context.Friends, nameof(Friend.Id), nameof(Friend.FullName));
+            AvailableRecipes = new SelectList(_context.Recipes, nameof(Recipe.Id), nameof(Recipe.Name));
 
-            if (Meal == null)
+            if (MealMV == null)
             {
                 return NotFound();
             }
@@ -46,7 +65,8 @@ namespace RemindMeal.Pages.Meals
                 return Page();
             }
 
-            _context.Attach(Meal).State = EntityState.Modified;
+            var meal = mapper.Map<Meal>(MealMV);
+            _context.Attach(meal).State = EntityState.Modified;
 
             try
             {
@@ -54,7 +74,7 @@ namespace RemindMeal.Pages.Meals
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MealExists(Meal.Id))
+                if (!MealExists(meal.Id))
                 {
                     return NotFound();
                 }

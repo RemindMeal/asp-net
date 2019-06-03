@@ -2,15 +2,19 @@ version: '3'
 
 services:
   app:
-    image: edouardberthe/remindmeal:latest
+    image: edouardberthe/remindmeal:test
     ports:
       - 80:80
     depends_on:
       - db
+    networks:
+      - net
   db:
     image: postgres:alpine
     volumes:
       - data:/var/lib/postgresql/data
+    networks:
+      - net
     environment:
       POSTGRES_USER: remindmeal
       POSTGRES_PASSWORD: remindmeal
@@ -18,3 +22,6 @@ services:
 
 volumes:
   data:
+
+networks:
+  net:

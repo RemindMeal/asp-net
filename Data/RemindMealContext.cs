@@ -59,14 +59,17 @@ namespace RemindMeal.Data
 
             modelBuilder.Entity<Recipe>().HasQueryFilter(r => r.User.Id == GetCurrentUser().Id);
             modelBuilder.Entity<Friend>().HasQueryFilter(f => f.User.Id == GetCurrentUser().Id);
+            modelBuilder.Entity<Meal>().HasQueryFilter(m => m.User.Id == GetCurrentUser().Id);
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             var user = GetCurrentUser();
-            Console.WriteLine($"We are in {nameof(SaveChangesAsync)} and CurrentUser is {user}");
-            ChangeTracker.DetectChanges();
-            ChangeTracker.ProcessCreation(user);
+            if (!(user is null))
+            {
+                ChangeTracker.DetectChanges();
+                ChangeTracker.ProcessCreation(user);
+            }
             return await base.SaveChangesAsync(true, cancellationToken);
         }
     }
@@ -75,7 +78,6 @@ namespace RemindMeal.Data
     {
         public static void ProcessCreation(this ChangeTracker changeTracker, User user)
         {
-            Console.WriteLine($"We are in {nameof(ProcessCreation)}");
             foreach (var item in changeTracker.Entries<IHasUser>().Where(e => e.State == EntityState.Added))
             {
                 item.Entity.User = user;

@@ -16,6 +16,9 @@ namespace RemindMeal.Profiles
                 .ForMember(recipe => recipe.Id, opt => opt.Ignore())
                 .ForMember(recipe => recipe.User, opt => opt.Ignore())
                 .ForMember(recipe => recipe.CreationDate, opt => opt.Ignore());
+            
+            CreateMap<MealModelView, Meal>()
+                .ForMember(meal => meal.User, opt => opt.Ignore());
         }
     }
 }

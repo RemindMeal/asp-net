@@ -27,7 +27,7 @@ namespace RemindMeal.Services
         public User GetCurrentSessionUser(RemindMealContext context)
         {
             string userName = _httpContextAccessor.HttpContext.User?.Identity?.Name;
-            return context.Users.Single(user => user.UserName == userName);
+            return context.Users.SingleOrDefault(user => user.UserName == userName);
         }
     }
 }
