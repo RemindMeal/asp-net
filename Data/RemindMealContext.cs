@@ -55,12 +55,13 @@ namespace RemindMeal.Data
             modelBuilder.Entity<Presence>()
                 .HasOne(p => p.Meal)
                 .WithMany(m => m.Presences)
-                .HasForeignKey(p => p.MealId);
+                .HasForeignKey(p => p.MealId); 
 
             modelBuilder.Entity<Recipe>().HasQueryFilter(r => r.User.Id == GetCurrentUser().Id);
             modelBuilder.Entity<Friend>().HasQueryFilter(f => f.User.Id == GetCurrentUser().Id);
             modelBuilder.Entity<Meal>().HasQueryFilter(m => m.User.Id == GetCurrentUser().Id);
         }
+
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
