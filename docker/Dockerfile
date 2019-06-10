@@ -3,11 +3,11 @@ WORKDIR /app
 COPY RemindMeal.csproj  ./
 RUN dotnet restore
 
-COPY * ./
+COPY . .
 ARG Configuration=Release
 RUN dotnet publish -c ${Configuration} -o publish --no-restore
 
 FROM mcr.microsoft.com/dotnet/core/aspnet:2.2
 COPY --from=builder /app/publish /app/
 WORKDIR /app
-CMD dotnet RemindMeal.dll
+ENTRYPOINT dotnet RemindMeal.dll
