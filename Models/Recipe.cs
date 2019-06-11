@@ -28,7 +28,7 @@ namespace RemindMeal.Models
         
         [Required]
         [Display(Name = "Type")]
-        public RecipeType Type { get; }
+        public RecipeType Type { get; set; }
         
         // Relationships
         [Required]

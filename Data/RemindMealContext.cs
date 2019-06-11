@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RemindMeal.Models;
 using RemindMeal.Services;
 
@@ -55,7 +56,12 @@ namespace RemindMeal.Data
             modelBuilder.Entity<Presence>()
                 .HasOne(p => p.Meal)
                 .WithMany(m => m.Presences)
-                .HasForeignKey(p => p.MealId); 
+                .HasForeignKey(p => p.MealId);
+            
+            // RecipeType
+            modelBuilder.Entity<Recipe>()
+                .Property(r => r.Type)
+                .HasConversion(new EnumToStringConverter<RecipeType>());
 
             modelBuilder.Entity<Recipe>().HasQueryFilter(r => r.User.Id == GetCurrentUser().Id);
             modelBuilder.Entity<Friend>().HasQueryFilter(f => f.User.Id == GetCurrentUser().Id);
