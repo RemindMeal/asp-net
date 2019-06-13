@@ -16,10 +16,8 @@ namespace RemindMeal.Models
         public int Id { get; set; }
 
         [Required]
-        [Display(Name = "Nom")]
         public string Name { get; set; }
         
-        [Display(Name = "Description")]
         public string Description { get; set; }
         
         [Required]
@@ -27,7 +25,6 @@ namespace RemindMeal.Models
         public DateTime CreationDate { get; }
         
         [Required]
-        [Display(Name = "Type")]
         public RecipeType Type { get; set; }
         
         // Relationships

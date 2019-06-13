@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using RemindMeal.Models;
 
 namespace RemindMeal.ModelViews
 {
@@ -10,5 +11,8 @@ namespace RemindMeal.ModelViews
         
         [Display(Name = "Description")]
         public string Description { get; set; }
+
+        [Display(Name = "Type")]
+        public RecipeType Type { get; set; }
     }
 }

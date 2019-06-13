@@ -2,12 +2,10 @@
 @model RemindMeal.Pages.Recipes.CreateModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Nouvelle recette";
 }
 
-<h1>Create</h1>
-
-<h4>Recipe</h4>
+<h4>Création d'une nouvelle recette</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -22,6 +20,11 @@
                 <label asp-for="Recipe.Description" class="control-label"></label>
                 <textarea asp-for="Recipe.Description" class="form-control"></textarea>
                 <span asp-validation-for="Recipe.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Recipe.Type" class="control-label"></label>
+                <select asp-for="Recipe.Type" class="form-control"></select>
+                <span asp-validation-for="Recipe.Type" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
