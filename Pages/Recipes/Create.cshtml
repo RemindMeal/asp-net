@@ -1,5 +1,6 @@
 @page
 @model RemindMeal.Pages.Recipes.CreateModel
+@using RemindMeal.Models
 
 @{
     ViewData["Title"] = "Nouvelle recette";
@@ -23,7 +24,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="Recipe.Type" class="control-label"></label>
-                <select asp-for="Recipe.Type" class="form-control"></select>
+                <select
+                    asp-for="Recipe.Type"
+                    asp-items="Html.GetEnumSelectList<RecipeType>()"
+                    class="form-control selectpicker">
+                </select>
                 <span asp-validation-for="Recipe.Type" class="text-danger"></span>
             </div>
             <div class="form-group">

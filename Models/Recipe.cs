@@ -40,9 +40,13 @@ namespace RemindMeal.Models
     
     public enum RecipeType
     {
+        [Display(Name = "Apéritif")]
         Aperitif,
+        [Display(Name = "Entrée")]
         Starter,
+        [Display(Name = "Plat principal")]
         Main,
+        [Display(Name = "Dessert")]
         Dessert
     }    
 }

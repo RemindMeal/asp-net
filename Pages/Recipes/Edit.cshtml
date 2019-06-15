@@ -1,5 +1,6 @@
 @page
 @model RemindMeal.Pages.Recipes.EditModel
+@using RemindMeal.Models
 
 @{
     ViewData["Title"] = "Edit";
@@ -24,14 +25,24 @@
                 <span asp-validation-for="Recipe.Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <label asp-for="Recipe.Type" class="control-label"></label>
+                <select
+                    asp-for="Recipe.Type"
+                    asp-items="Html.GetEnumSelectList<RecipeType>()"
+                    class="form-control selectpicker">
+                </select>
+                <span asp-validation-for="Recipe.Type" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Enregistrer" class="btn btn-primary" />
+                <a asp-page="./Index" class="btn btn-primary">Retour à la liste</a>
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-page="./Index" class="btn btn-primary">Retour à la liste</a>
+    
 </div>
 
 @section Scripts {
