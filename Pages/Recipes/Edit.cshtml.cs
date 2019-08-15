@@ -1,24 +1,27 @@
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using RemindMeal.Data;
-using RemindMeal.Models;
+using RemindMeal.ModelViews;
 
 namespace RemindMeal.Pages.Recipes
 {
     public class EditModel : PageModel
     {
         private readonly RemindMealContext _context;
+        private readonly IMapper _mapper;
 
-        public EditModel(RemindMealContext context)
+        public EditModel(RemindMealContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         [BindProperty]
-        public Recipe Recipe { get; set; }
+        public RecipeEditModelView Recipe { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -27,7 +30,8 @@ namespace RemindMeal.Pages.Recipes
                 return NotFound();
             }
 
-            Recipe = await _context.Recipes.FirstOrDefaultAsync(m => m.Id == id);
+            var recipe = await _context.Recipes.FirstOrDefaultAsync(m => m.Id == id);
+            Recipe = _mapper.Map<RecipeEditModelView>(recipe);
 
             if (Recipe == null)
             {

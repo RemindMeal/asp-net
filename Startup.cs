@@ -14,6 +14,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RemindMeal.Models;
 using RemindMeal.Services;
+using System.Collections.Generic;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 namespace RemindMeal
 {
@@ -35,7 +38,7 @@ namespace RemindMeal
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            
+
             // Database
             services.AddDbContext<RemindMealContext>(options =>
             {
@@ -43,7 +46,7 @@ namespace RemindMeal
                 Console.WriteLine($"connectionString is {connectionString}");
                 options.UseNpgsql(connectionString);
             });
-            
+
             // Identity
             services.AddDefaultIdentity<User>().AddDefaultUI(UIFramework.Bootstrap4).AddEntityFrameworkStores<RemindMealContext>();
             services.Configure<IdentityOptions>(options =>
@@ -64,13 +67,15 @@ namespace RemindMeal
                         .RequireAuthenticatedUser()
                         .Build();
                     options.Filters.Add(new AuthorizeFilter(policy));
-                }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            
+                })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
             // AutoMapper for mapping between Models <--> ViewModels
             services.AddAutoMapper(typeof(Startup));
-            
+
             // User Resolver
             services.AddSingleton<IUserResolverService, UserResolverService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -90,12 +95,14 @@ namespace RemindMeal
             }
 
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
             app.UseAuthentication();
 
             app.UseMvc();
+
         }
     }
 }

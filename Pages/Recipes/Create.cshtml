@@ -2,11 +2,7 @@
 @model RemindMeal.Pages.Recipes.CreateModel
 @using RemindMeal.Models
 
-@{
-    ViewData["Title"] = "Nouvelle recette";
-}
-
-<h4>Création d'une nouvelle recette</h4>
+<h4>Enregistrer une nouvelle recette</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -24,24 +20,23 @@
             </div>
             <div class="form-group">
                 <label asp-for="Recipe.Type" class="control-label"></label>
-                <select
-                    asp-for="Recipe.Type"
-                    asp-items="Html.GetEnumSelectList<RecipeType>()"
-                    class="form-control selectpicker">
-                </select>
+                <select asp-for="Recipe.Type" asp-items="Html.GetEnumSelectList<RecipeType>()"
+                    class="form-control selectpicker"></select>
                 <span asp-validation-for="Recipe.Type" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Créer" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-page="Index">Back to List</a>
+    <a asp-page="Index">
+        Retour à la liste
+    </a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
