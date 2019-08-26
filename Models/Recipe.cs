@@ -50,7 +50,7 @@ namespace RemindMeal.Models
         Soup,
         [Display(Name = "Viande")]
         Meat,
-        [Disolay(Name = "Légumes")]
+        [Display(Name = "Légumes")]
         Side,
         [Display(Name = "Dessert")]
         Dessert
