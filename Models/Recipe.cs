@@ -46,6 +46,12 @@ namespace RemindMeal.Models
         Starter,
         [Display(Name = "Plat principal")]
         Main,
+        [Display(Name = "Soupe")]
+        Soup,
+        [Display(Name = "Viande")]
+        Meat,
+        [Disolay(Name = "Légumes")]
+        Side,
         [Display(Name = "Dessert")]
         Dessert
     }    
