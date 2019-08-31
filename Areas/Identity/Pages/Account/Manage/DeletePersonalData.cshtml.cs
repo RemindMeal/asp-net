@@ -62,7 +62,7 @@ namespace RemindMeal.Areas.Identity.Pages.Account.Manage
             {
                 if (!await _userManager.CheckPasswordAsync(user, Input.Password))
                 {
-                    ModelState.AddModelError(string.Empty, "Password not correct.");
+                    ModelState.AddModelError(string.Empty, "Mot de passe incorrect.");
                     return Page();
                 }
             }

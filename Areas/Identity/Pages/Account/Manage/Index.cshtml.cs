@@ -26,6 +26,7 @@ namespace RemindMeal.Areas.Identity.Pages.Account.Manage
             _emailSender = emailSender;
         }
 
+        [Display(Name = "Nom d'utilisateur")]
         public string Username { get; set; }
 
         public bool IsEmailConfirmed { get; set; }
