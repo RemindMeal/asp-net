@@ -11,22 +11,23 @@ namespace RemindMeal.Models
             CreationDate = DateTime.Now;
             Cookings = new List<Cooking>();
         }
-        
+
         [Key]
         public int Id { get; set; }
 
         [Required]
+        [Display(Name = "Nom")]
         public string Name { get; set; }
-        
+
         public string Description { get; set; }
-        
+
         [Required]
         [Display(Name = "Date de création")]
         public DateTime CreationDate { get; }
-        
+
         [Required]
         public RecipeType Type { get; set; }
-        
+
         // Relationships
         [Required]
         public User User { get; set; }
@@ -37,7 +38,7 @@ namespace RemindMeal.Models
             return Name;
         }
     }
-    
+
     public enum RecipeType
     {
         [Display(Name = "Apéritif")]
@@ -54,5 +55,5 @@ namespace RemindMeal.Models
         Side,
         [Display(Name = "Dessert")]
         Dessert
-    }    
+    }
 }
