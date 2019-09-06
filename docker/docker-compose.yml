@@ -2,7 +2,7 @@ version: '3'
 
 services:
   app:
-    image: edouardberthe/remindmeal
+    image: remindmeal/remindmeal:latest
     ports:
       - 9001:80
     networks: 
