@@ -29,9 +29,11 @@ namespace RemindMeal.Pages.Meals
 
         [BindProperty]
         public MealModelView Meal { get; set; }
+
         [BindProperty]
         public int[] SelectedFriends { get; set; }
         public SelectList AvailableFriends { get; set; }
+
         [BindProperty]
         public int[] SelectedRecipes { get; set; }
         public SelectList AvailableRecipes { get; set; }
@@ -48,13 +50,13 @@ namespace RemindMeal.Pages.Meals
             foreach (var friendId in SelectedFriends)
             {
                 var friend = _context.Friends.Find(friendId);
-                meal.Presences.Add(new Presence {Meal = meal, Friend = friend});
+                meal.Presences.Add(new Presence { Meal = meal, Friend = friend });
             }
 
             foreach (var recipeId in SelectedRecipes)
             {
                 var recipe = _context.Recipes.Find(recipeId);
-                meal.Cookings.Add(new Cooking {Meal = meal, Recipe = recipe});
+                meal.Cookings.Add(new Cooking { Meal = meal, Recipe = recipe });
             }
             await _context.SaveChangesAsync();
 

@@ -26,9 +26,11 @@ namespace RemindMeal.Pages.Meals
 
         [BindProperty]
         public MealModelView MealMV { get; set; }
+
         [BindProperty]
         public int[] SelectedFriends { get; set; }
         public SelectList AvailableFriends { get; set; }
+
         [BindProperty]
         public int[] SelectedRecipes { get; set; }
         public SelectList AvailableRecipes { get; set; }
@@ -43,7 +45,10 @@ namespace RemindMeal.Pages.Meals
                 return NotFound();
             }
 
-            var meal = await _context.Meals.FirstOrDefaultAsync(m => m.Id == id);
+            var meal = await _context.Meals
+                .Include(m => m.Presences).ThenInclude(p => p.Friend)
+                .Include(m => m.Cookings).ThenInclude(c => c.Recipe)
+                .FirstOrDefaultAsync(m => m.Id == id);
             MealMV = mapper.Map<MealModelView>(meal);
             MealId = meal.Id;
             SelectedFriends = meal.Friends.Select(friend => friend.Id).ToArray();
