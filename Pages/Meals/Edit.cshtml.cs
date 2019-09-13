@@ -35,9 +35,6 @@ namespace RemindMeal.Pages.Meals
         public int[] SelectedRecipes { get; set; }
         public SelectList AvailableRecipes { get; set; }
 
-        [BindProperty]
-        public int MealId { get; set; }
-
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -50,7 +47,6 @@ namespace RemindMeal.Pages.Meals
                 .Include(m => m.Cookings).ThenInclude(c => c.Recipe)
                 .FirstOrDefaultAsync(m => m.Id == id);
             MealMV = mapper.Map<MealModelView>(meal);
-            MealId = meal.Id;
             SelectedFriends = meal.Friends.Select(friend => friend.Id).ToArray();
             SelectedRecipes = meal.Recipes.Select(recipe => recipe.Id).ToArray();
             AvailableFriends = new SelectList(_context.Friends, nameof(Friend.Id), nameof(Friend.FullName));
@@ -70,8 +66,27 @@ namespace RemindMeal.Pages.Meals
                 return Page();
             }
 
-            var meal = mapper.Map<Meal>(MealMV);
-            _context.Attach(meal).State = EntityState.Modified;
+            var meal = _context.Meals
+                .Include(m => m.Cookings)
+                .Include(m => m.Presences)
+                .First(m => m.Id == MealMV.Id);
+
+            meal.Date = MealMV.Date;
+            var recipeIds = meal.Cookings.Select(c => c.RecipeId).ToArray();
+            _context.AddRange(
+                SelectedRecipes
+                    .Where(recipeId => !recipeIds.Contains(recipeId))
+                    .Select(recipeId => new Cooking { MealId = meal.Id, RecipeId = recipeId })
+            );
+            _context.RemoveRange(meal.Cookings.Where(c => !SelectedRecipes.Contains(c.RecipeId)));
+
+            var friendIds = meal.Presences.Select(c => c.FriendId).ToArray();
+            _context.AddRange(
+                SelectedFriends
+                    .Where(friendId => !friendIds.Contains(friendId))
+                    .Select(friendId => new Presence { MealId = meal.Id, FriendId = friendId })
+            );
+            _context.RemoveRange(meal.Presences.Where(p => !SelectedFriends.Contains(p.FriendId)));
 
             try
             {
