@@ -9,28 +9,16 @@ namespace RemindMeal.Models
 {
     public sealed class Meal : IHasUser
     {
-        public Meal()
-        {
-            Presences = new List<Presence>();
-            Cookings = new List<Cooking>();
-        }
-        
         [Key]
         public int Id { get; set; }
 
         [DataType(DataType.Date)]
-        public DateTime Date { get; set; }
+        public DateTime Date { get; set; } = DateTime.Now;
 
         // Relationships
         [Required]
         public User User { get; set; }
-        public ICollection<Presence> Presences { get; }
-        public ICollection<Cooking> Cookings { get; }
-
-        [NotMapped]
-        public ICollection<Friend> Friends => Presences.Select(p => p.Friend).ToImmutableArray();
-
-        [NotMapped]
-        public ICollection<Recipe> Recipes => Cookings.Select(c => c.Recipe).ToImmutableArray();
+        public ICollection<Presence> Presences { get; } = new List<Presence>();
+        public ICollection<Cooking> Cookings { get; } = new List<Cooking>();
     }
 }

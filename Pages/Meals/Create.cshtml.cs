@@ -22,21 +22,14 @@ namespace RemindMeal.Pages.Meals
 
         public IActionResult OnGet()
         {
-            AvailableFriends = new SelectList(_context.Friends, nameof(Friend.Id), nameof(Friend.FullName));
-            AvailableRecipes = new SelectList(_context.Recipes, nameof(Recipe.Id), nameof(Recipe.Name));
+            MealMV = new MealModelView();
+            MealMV.AvailableFriends = new SelectList(_context.Friends, nameof(Friend.Id), nameof(Friend.FullName));
+            MealMV.AvailableRecipes = new SelectList(_context.Recipes, nameof(Recipe.Id), nameof(Recipe.Name));
             return Page();
         }
 
         [BindProperty]
-        public MealModelView Meal { get; set; }
-
-        [BindProperty]
-        public int[] SelectedFriends { get; set; }
-        public SelectList AvailableFriends { get; set; }
-
-        [BindProperty]
-        public int[] SelectedRecipes { get; set; }
-        public SelectList AvailableRecipes { get; set; }
+        public MealModelView MealMV { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -45,19 +38,8 @@ namespace RemindMeal.Pages.Meals
                 return Page();
             }
 
-            var meal = _mapper.Map<Meal>(Meal);
-            _context.Meals.Add(meal);
-            foreach (var friendId in SelectedFriends)
-            {
-                var friend = _context.Friends.Find(friendId);
-                meal.Presences.Add(new Presence { Meal = meal, Friend = friend });
-            }
-
-            foreach (var recipeId in SelectedRecipes)
-            {
-                var recipe = _context.Recipes.Find(recipeId);
-                meal.Cookings.Add(new Cooking { Meal = meal, Recipe = recipe });
-            }
+            var meal = _mapper.Map<Meal>(MealMV);
+            _context.Update(meal);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

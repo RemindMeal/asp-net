@@ -23,10 +23,10 @@ namespace RemindMeal.Pages.Friends
         public IEnumerable<(Recipe, int)> Recipes =>
             Friend
             .Presences
-            .SelectMany(presence => presence.Meal.Recipes)
+            .SelectMany(presence => presence.Meal.Cookings.Select(c => c.Recipe))
             .GroupBy(recipe => recipe)
             .Select(g => (g.Key, g.Count()));
-                
+
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
