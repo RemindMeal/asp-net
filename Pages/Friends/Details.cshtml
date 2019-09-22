@@ -5,39 +5,17 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h4>@Model.Friend.Name @Model.Friend.Surname</h4>
 
 <div>
-    <h4>Friend</h4>
     <hr />
-    <dl class="row">
-        <dt class="col-sm-4">
-            @Html.DisplayNameFor(model => model.Friend.Name)
-        </dt>
-        <dd class="col-sm-8">
-            @Html.DisplayFor(model => model.Friend.Name)
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class="col-sm-4">
-            @Html.DisplayNameFor(model => model.Friend.Surname)
-        </dt>
-        <dd class="col-sm-8">
-            @Html.DisplayFor(model => model.Friend.Surname)
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class="col-sm-4">
-            Cet invité a déjà goûté à:
-        </dt>
-        <dt class="col-sm-8">
-            <ul>
-            @foreach (var (recipe, count) in Model.Recipes) {
-                <li>@recipe.Name (@count fois)</li>
-            }
-            </ul>
-        </dt>
-    </dl>
+    @Model.Friend.Name a déjà goûté à :
+
+    <ul>
+    @foreach (var (recipe, count) in Model.Recipes) {
+        <li><a asp-page="../Recipes/Details" asp-route-id="@recipe.Id">@recipe.Name</a> (@count fois)</li>
+    }
+    </ul>
 </div>
 <div>
     <a asp-page="./Edit" asp-route-id="@Model.Friend.Id" class="btn btn-warning">Modifier</a>
