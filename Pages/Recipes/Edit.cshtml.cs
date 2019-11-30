@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using RemindMeal.Data;
+using RemindMeal.Models;
 using RemindMeal.ModelViews;
 
 namespace RemindMeal.Pages.Recipes
@@ -47,7 +48,8 @@ namespace RemindMeal.Pages.Recipes
                 return Page();
             }
 
-            _context.Attach(Recipe).State = EntityState.Modified;
+            var recipe = _mapper.Map<Recipe>(Recipe);
+            _context.Attach(recipe).State = EntityState.Modified;
 
             try
             {
