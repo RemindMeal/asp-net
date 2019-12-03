@@ -3,10 +3,8 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using RemindMeal.Data;
@@ -14,9 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RemindMeal.Models;
 using RemindMeal.Services;
-using System.Collections.Generic;
-using System.Globalization;
-using Microsoft.AspNetCore.Localization;
+using Microsoft.Extensions.Hosting;
 
 namespace RemindMeal
 {
@@ -48,7 +44,10 @@ namespace RemindMeal
             });
 
             // Identity
-            services.AddDefaultIdentity<User>().AddDefaultUI(UIFramework.Bootstrap4).AddEntityFrameworkStores<RemindMealContext>();
+            services
+                .AddDefaultIdentity<User>()
+                .AddDefaultUI()
+                .AddEntityFrameworkStores<RemindMealContext>();
             services.Configure<IdentityOptions>(options =>
             {
                 // Default Password settings.
@@ -67,8 +66,7 @@ namespace RemindMeal
                         .RequireAuthenticatedUser()
                         .Build();
                     options.Filters.Add(new AuthorizeFilter(policy));
-                })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+                });
 
             // AutoMapper for mapping between Models <--> ViewModels
             services.AddAutoMapper(typeof(Startup));
@@ -79,7 +77,7 @@ namespace RemindMeal
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, RemindMealContext context)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, RemindMealContext context)
         {
             if (env.IsDevelopment())
             {
@@ -99,9 +97,13 @@ namespace RemindMeal
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
+            app.UseRouting();
+
             app.UseAuthentication();
 
-            app.UseMvc();
+            app.UseEndpoints(endpoints => {
+                endpoints.MapRazorPages();
+            });
 
         }
     }
