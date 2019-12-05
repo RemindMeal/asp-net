@@ -10,7 +10,7 @@ services:
     depends_on:
       - db
   db:
-    image: postgres:11.5-alpine
+    image: postgres:11.6-alpine
     volumes:
       - data:/var/lib/postgresql/data
     networks:
