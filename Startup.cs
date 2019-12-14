@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using RemindMeal.Models;
 using RemindMeal.Services;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace RemindMeal
 {
@@ -99,6 +100,10 @@ namespace RemindMeal
 
             app.UseRouting();
 
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
             app.UseAuthentication();
             app.UseAuthorization();
 
