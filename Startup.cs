@@ -1,4 +1,3 @@
-using System;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -38,11 +37,7 @@ namespace RemindMeal
 
             // Database
             services.AddDbContext<RemindMealContext>(options =>
-            {
-                var connectionString = Configuration.GetConnectionString("db");
-                Console.WriteLine($"connectionString is {connectionString}");
-                options.UseNpgsql(connectionString);
-            });
+                options.UseNpgsql(Configuration.GetConnectionString("db")));
 
             // Identity
             services
@@ -59,6 +54,13 @@ namespace RemindMeal
                 options.Password.RequiredLength = 6;
                 options.Password.RequiredUniqueChars = 1;
             });
+            services.AddAuthentication()
+                .AddGoogle(options =>
+                {
+                    var googleAuthNSection = Configuration.GetSection("Authentication:Google");
+                    options.ClientId = googleAuthNSection["ClientId"];
+                    options.ClientSecret = googleAuthNSection["ClientSecret"];
+                });
 
             services.AddMvc(options =>
                 {
@@ -93,7 +95,7 @@ namespace RemindMeal
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
 
             app.UseStaticFiles();
             app.UseCookiePolicy();
