@@ -11,7 +11,7 @@ namespace RemindMeal.ModelViews
 		public int Id { get; set; }
 
 		[DataType(DataType.Date)]
-		public DateTime Date { get; set; }
+		public DateTime Date { get; set; } = DateTime.Today;
 
 		public ICollection<int> SelectedFriendIds { get; set; } = new List<int>();
 		public ICollection<int> SelectedRecipeIds { get; set; } = new List<int>();

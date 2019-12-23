@@ -1,9 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
 
 namespace RemindMeal.Models
 {
@@ -13,7 +10,7 @@ namespace RemindMeal.Models
         public int Id { get; set; }
 
         [DataType(DataType.Date)]
-        public DateTime Date { get; set; } = DateTime.Now;
+        public DateTime Date { get; set; }
 
         // Relationships
         [Required]
