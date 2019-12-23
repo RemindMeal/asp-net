@@ -2,23 +2,23 @@ version: '3'
 
 services:
   app:
-    image: remindmeal/remindmeal:latest
+    image: remindmeal/remindmeal:test
     ports:
       - 9001:80
     networks: 
       - net
     depends_on:
       - db
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
   db:
     image: postgres:11.6-alpine
     volumes:
       - data:/var/lib/postgresql/data
     networks:
       - net
-    environment:
-      POSTGRES_USER: remindmeal
-      POSTGRES_PASSWORD: remindmeal
-      POSTGRES_DB: remindmeal
+    env_file:
+      - .env
 
 volumes:
   data:

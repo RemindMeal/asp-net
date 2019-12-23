@@ -40,7 +40,6 @@ namespace RemindMeal
             services.AddDbContext<RemindMealContext>(options =>
             {
                 var connectionString = Configuration.GetConnectionString("db");
-                Console.WriteLine($"connectionString is {connectionString}");
                 options.UseNpgsql(connectionString);
             });
 
@@ -82,11 +81,13 @@ namespace RemindMeal
         {
             if (env.IsDevelopment())
             {
+                Console.WriteLine("Message from Startup, environment is Development.");
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
             }
             else
             {
+                Console.WriteLine("Message from Startup, environment is Production. Launching database migration.");
                 context.Database.Migrate();
                 app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
