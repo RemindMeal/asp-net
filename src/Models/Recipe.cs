@@ -23,6 +23,7 @@ namespace RemindMeal.Models
 
         [Required]
         [Display(Name = "Date de création")]
+        [DisplayFormat(DataFormatString = "dd/MM/yyyy")]
         public DateTime CreationDate { get; }
 
         [Required]
