@@ -40,7 +40,7 @@ jobs:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       - name: Build :latest
-        run: docker build -t remindmeal/remindmeal:latest .
+        run: docker build -t remindmeal/remindmeal:latest -f docker/Dockerfile .
       - name: Push to docker hub :latest
         uses: actions-hub/docker@master
         with:
