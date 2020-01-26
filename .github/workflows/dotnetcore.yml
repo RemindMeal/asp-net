@@ -4,16 +4,22 @@ on: [push]
 
 jobs:
   build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - name: Checkout
+        uses: actions/checkout@v1
+      
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 3.1.100
+      
       - name: Build with dotnet
         run: dotnet build --configuration Release src/RemindMeal.csproj
+
   test:
+    name: Test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -23,3 +29,19 @@ jobs:
           dotnet-version: 3.1.100
       - name: Launch tests
         run: dotnet test
+
+  push:
+    name: Docker Push
+    runs-on: [ubuntu-latest]
+    steps:
+      - name: Login to docker hub
+        uses: actions-hub/docker/login@master
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Build :latest
+        run: docker build -t remindmeal/remindmeal:latest .
+      - name: Push to docker hub :latest
+        uses: actions-hub/docker@master
+        with:
+          args: push remindmeal/remindmeal:latest
