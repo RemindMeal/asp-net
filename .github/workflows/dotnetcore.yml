@@ -39,5 +39,6 @@ jobs:
         env:
           USERNAME: ${{ secrets.DOCKER_USERNAME }}
           PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          IMAGE_NAME: "remindmeal/remindmeal"
           TAG_NAME: "v0.0.1"
           LATEST: "true"
