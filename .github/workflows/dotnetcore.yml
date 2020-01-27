@@ -35,5 +35,3 @@ jobs:
           name: remindmeal/remindmeal
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          workdir: ./docker/
-          context: ./
