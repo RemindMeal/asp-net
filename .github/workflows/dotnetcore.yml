@@ -34,17 +34,9 @@ jobs:
     name: Docker Push
     runs-on: [ubuntu-latest]
     steps:
-      - name: Login to docker hub
-        uses: actions-hub/docker/login@master
+      - name: Build & Push to Docker Hub
+        uses: opspresso/action-docker@master
         env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-          IMAGE_NAME: remindmeal/remindmeal
-      - name: Build :latest
-        uses: actions-hub/docker@master
-        with:
-          args: build -t remindmeal/remindmeal:latest -f docker/Dockerfile .
-      - name: Push to docker hub :latest
-        uses: actions-hub/docker@master
-        with:
-          args: push remindmeal/remindmeal:latest
+          USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          LATEST: "true"
