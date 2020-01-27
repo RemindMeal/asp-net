@@ -36,13 +36,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build & Push to Docker Hub
-        uses: opspresso/action-docker@master
-        env:
-          USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-          IMAGE_NAME: "remindmeal/remindmeal"
-          TAG_NAME: "v0.0.1"
-          LATEST: "true"
+        uses: elgohr/Publish-Docker-Github-Action@master
         with:
+          name: remindmeal/remindmeal
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
           workdir: docker
+          context: .
 
