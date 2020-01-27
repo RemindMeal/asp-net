@@ -39,6 +39,7 @@ jobs:
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          IMAGE_NAME: remindmeal/remindmeal
       - name: Build :latest
         run: docker build -t remindmeal/remindmeal:latest -f docker/Dockerfile .
       - name: Push to docker hub :latest
