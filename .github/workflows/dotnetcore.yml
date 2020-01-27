@@ -43,3 +43,6 @@ jobs:
           IMAGE_NAME: "remindmeal/remindmeal"
           TAG_NAME: "v0.0.1"
           LATEST: "true"
+        with:
+          workdir: docker
+
