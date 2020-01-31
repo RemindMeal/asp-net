@@ -10,6 +10,17 @@
 <p>
     <a asp-page="Create" class="btn btn-success">Créer une nouvelle recette</a>
 </p>
+
+<form>
+    <div class="form-row col-xl-6 col-lg-6 col-md-8 col-sm-12">
+        <div class="input-group">
+            <input type="text" class="form-control" asp-for="SearchString"/>
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-primary">Rechercher</button>
+            </div>
+        </div>
+    </div>
+</form>
 <table class="table">
     <thead>
         <tr>

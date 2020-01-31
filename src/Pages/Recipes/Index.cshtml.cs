@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using RemindMeal.Data;
@@ -20,7 +22,16 @@ namespace RemindMeal.Pages.Recipes
 
         public async Task OnGetAsync()
         {
-            Recipe = await _context.Recipes.ToListAsync();
+            var recipes = from m in _context.Recipes select m;
+            if (!string.IsNullOrEmpty(SearchString))
+            {
+                var lowerSearchString = SearchString.ToLower();
+                recipes = recipes.Where(r => r.Name.ToLower().Contains(lowerSearchString) || r.Description.ToLower().Contains(lowerSearchString));
+            }
+            Recipe = await recipes.ToListAsync();
         }
+
+        [BindProperty(SupportsGet = true)]
+        public string SearchString { get; set; }
     }
 }
