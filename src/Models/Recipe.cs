@@ -33,6 +33,7 @@ namespace RemindMeal.Models
         [Required]
         public User User { get; set; }
         public ICollection<Cooking> Cookings { get; set; }
+        public ICollection<RecipeTag> RecipeTags { get; set; }
 
         public override string ToString()
         {

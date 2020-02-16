@@ -3,10 +3,10 @@
 @using RemindMeal.Models
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Tag";
 }
 
-<h1>Modification de recette</h1>
+<h1>Modification de tag</h1>
 
 <hr />
 <div class="row">
@@ -32,15 +32,6 @@
                     class="form-control selectpicker">
                 </select>
                 <span asp-validation-for="RecipeView.Type" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RecipeView.SelectedTagIds" class="control-label">Tags</label>
-                <select
-                    asp-for="RecipeView.SelectedTagIds"
-                    asp-items="Model.RecipeView.AvailableTags"
-                    class="form-control selectpicker"
-                    data-live-search="true">
-                </select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Enregistrer" class="btn btn-primary" />

@@ -18,7 +18,7 @@ namespace RemindMeal.Pages.Recipes
             _context = context;
         }
 
-        public IList<Recipe> Recipe { get;set; }
+        public IList<Recipe> Recipes { get; set; }
 
         public async Task OnGetAsync()
         {
@@ -28,7 +28,10 @@ namespace RemindMeal.Pages.Recipes
                 var lowerSearchString = SearchString.ToLower();
                 recipes = recipes.Where(r => r.Name.ToLower().Contains(lowerSearchString) || r.Description.ToLower().Contains(lowerSearchString));
             }
-            Recipe = await recipes.ToListAsync();
+            Recipes = await recipes
+                .Include(r => r.RecipeTags)
+                .ThenInclude(rt => rt.Tag)
+                .ToListAsync();
         }
 
         [BindProperty(SupportsGet = true)]

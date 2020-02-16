@@ -23,32 +23,38 @@
         </div>
     </form>
 </p>
-<table class="table">
+<table class="table table-hover">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Recipe[0].Name)
+                @Html.DisplayNameFor(model => model.Recipes[0].Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Recipe[0].Type)
+                @Html.DisplayNameFor(model => model.Recipes[0].Type)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Recipe[0].Description)
+                Tags
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Recipes[0].Description)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Recipe) {
+@foreach (var item in Model.Recipes) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Html.DisplayFor(_ => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Type)
+                @Html.DisplayFor(_ => item.Type)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
+                @string.Join(", ", item.RecipeTags.Select(rt => rt.Tag.Name))
+            </td>
+            <td>
+                @Html.DisplayFor(_ => item.Description)
             </td>
             <td>
                 <div class="btn-group" role="group">

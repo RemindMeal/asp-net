@@ -9,7 +9,7 @@ using RemindMeal.Models;
 
 namespace RemindMeal.Pages.Friends
 {
-    public class IndexModel : PageModel
+    public sealed class IndexModel : PageModel
     {
         private readonly RemindMealContext _context;
         private readonly UserManager<User> _userManager;
@@ -20,12 +20,12 @@ namespace RemindMeal.Pages.Friends
             _userManager = userManager;
         }
 
-        public IList<Friend> Friend { get;set; }
+        public IList<Friend> Friends { get;set; }
 
         public async Task OnGetAsync()
         {
             var user = await _userManager.GetUserAsync(User);
-            Friend = await _context.Friends.Where(friend => friend.User == user).ToListAsync();
+            Friends = await _context.Friends.Where(friend => friend.User == user).ToListAsync();
         }
     }
 }

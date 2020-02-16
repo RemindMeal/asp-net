@@ -22,14 +22,14 @@ namespace RemindMeal.Pages.Meals
 
         public IActionResult OnGet()
         {
-            MealMV = new MealModelView();
-            MealMV.AvailableFriends = new SelectList(_context.Friends, nameof(Friend.Id), nameof(Friend.FullName));
-            MealMV.AvailableRecipes = new SelectList(_context.Recipes, nameof(Recipe.Id), nameof(Recipe.Name));
+            MealView = new MealModelView();
+            MealView.AvailableFriends = new SelectList(_context.Friends, nameof(Friend.Id), nameof(Friend.FullName));
+            MealView.AvailableRecipes = new SelectList(_context.Recipes, nameof(Recipe.Id), nameof(Recipe.Name));
             return Page();
         }
 
         [BindProperty]
-        public MealModelView MealMV { get; set; }
+        public MealModelView MealView { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -38,7 +38,7 @@ namespace RemindMeal.Pages.Meals
                 return Page();
             }
 
-            var meal = _mapper.Map<Meal>(MealMV);
+            var meal = _mapper.Map<Meal>(MealView);
             _context.Update(meal);
             await _context.SaveChangesAsync();
 

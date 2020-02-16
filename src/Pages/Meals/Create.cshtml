@@ -13,24 +13,24 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="MealMV.Date" class="control-label"></label>
-                <input asp-for="MealMV.Date" class="form-control" />
-                <span asp-validation-for="MealMV.Date" class="text-danger"></span>
+                <label asp-for="MealView.Date" class="control-label"></label>
+                <input asp-for="MealView.Date" class="form-control" />
+                <span asp-validation-for="MealView.Date" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="MealMV.SelectedFriendIds" class="control-label">Invités</label>
+                <label asp-for="MealView.SelectedFriendIds" class="control-label">Invités</label>
                 <select
-                    asp-for="MealMV.SelectedFriendIds"
-                    asp-items="Model.MealMV.AvailableFriends"
+                    asp-for="MealView.SelectedFriendIds"
+                    asp-items="Model.MealView.AvailableFriends"
                     class="form-control selectpicker"
                     data-live-search="true">
                 </select>
             </div>
             <div class="form-group">
-                <label asp-for="MealMV.SelectedRecipeIds" class="control-label">Menu</label>
+                <label asp-for="MealView.SelectedRecipeIds" class="control-label">Menu</label>
                 <select
-                    asp-for="MealMV.SelectedRecipeIds"
-                    asp-items="Model.MealMV.AvailableRecipes"
+                    asp-for="MealView.SelectedRecipeIds"
+                    asp-items="Model.MealView.AvailableRecipes"
                     class="form-control selectpicker"
                     data-live-search="true">
                 </select>
