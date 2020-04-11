@@ -45,19 +45,17 @@ namespace RemindMeal
 
             // Identity
             services
-                .AddDefaultIdentity<User>()
+                .AddDefaultIdentity<User>(options => { 
+                    options.Password.RequireDigit = true;
+                    options.Password.RequireLowercase = true;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequiredLength = 6;
+                    options.Password.RequiredUniqueChars = 1;
+                })
+                .AddErrorDescriber<RemindMealIdentityErrorDescriber>()
                 .AddDefaultUI()
                 .AddEntityFrameworkStores<RemindMealContext>();
-            services.Configure<IdentityOptions>(options =>
-            {
-                // Default Password settings.
-                options.Password.RequireDigit = true;
-                options.Password.RequireLowercase = true;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequiredLength = 6;
-                options.Password.RequiredUniqueChars = 1;
-            });
 
             services.AddMvc(options =>
                 {
@@ -79,16 +77,15 @@ namespace RemindMeal
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, RemindMealContext context)
         {
+            Console.WriteLine($"Startup: Environment is {env.EnvironmentName}");
             if (env.IsDevelopment())
             {
-                Console.WriteLine("Message from Startup, environment is Development.");
+                Console.WriteLine("Using Developer Page and DB error page");
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
             }
             else
             {
-                Console.WriteLine("Message from Startup, environment is Production. Launching database migration.");
-                context.Database.Migrate();
                 app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
