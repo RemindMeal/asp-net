@@ -1,36 +1,48 @@
 name: .NET Core
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
 
 jobs:
+
   build:
     name: Build
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout Repository
         uses: actions/checkout@v2
-      
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 3.1.201
-      
-      - name: Release Build
+      - name: Build in Release with dotnet
         run: dotnet build --configuration Debug src/RemindMeal.csproj
-
-      - name: Debug Build
+      - name: Build in Debug with dotnet
         run: dotnet build --configuration Release src/RemindMeal.csproj
-
-      - name: Launch tests
-        run: dotnet test
-
-  push:
-    name: Docker Push
-    runs-on: [ubuntu-latest]
+  
+  test:
+    name: Testing
+    needs: build
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Build & Push to Docker Hub
-        uses: elgohr/Publish-Docker-Github-Action@master
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.201
+      - run: dotnet test
+
+  push:
+    name: Push to DockerHub
+    needs: [build, test]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: elgohr/Publish-Docker-Github-Action@master
         with:
           name: remindmeal/remindmeal
           username: ${{ secrets.DOCKER_USERNAME }}
