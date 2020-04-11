@@ -25,7 +25,7 @@ jobs:
       - name: Build in Release
         run: dotnet build --no-restore --configuration Release src/RemindMeal.csproj
       - name: Build in Debug with dotnet
-        run: dotnet build --no-restore --configuration Debug src/RemindMeal.csproj
+        run: dotnet build --no-restore --configuration Debug
       - name: Tests
         if: success()
         run: dotnet test --no-build
