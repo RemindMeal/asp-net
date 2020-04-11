@@ -10,7 +10,7 @@ on:
 
 jobs:
 
-  build:
+  build-test-deploy:
     name: Build
     runs-on: ubuntu-latest
     steps:
@@ -20,29 +20,18 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 3.1.201
-      - name: Build in Release with dotnet
-        run: dotnet build --configuration Debug src/RemindMeal.csproj
+      - name: Restoring dependencies
+        run: dotnet restore
+      - name: Build in Release
+        run: dotnet build --no-restore --configuration Release src/RemindMeal.csproj
       - name: Build in Debug with dotnet
-        run: dotnet build --configuration Release src/RemindMeal.csproj
-  
-  test:
-    name: Testing
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 3.1.201
-      - run: dotnet test
-
-  push:
-    name: Push to DockerHub
-    needs: [build, test]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: elgohr/Publish-Docker-Github-Action@master
+        run: dotnet build --no-restore --configuration Debug src/RemindMeal.csproj
+      - name: Tests
+        if: success()
+        run: dotnet test --no-build
+      - name: Push to DockerHub
+        if: success() && github.event_name == 'push'
+        uses: elgohr/Publish-Docker-Github-Action@master
         with:
           name: remindmeal/remindmeal
           username: ${{ secrets.DOCKER_USERNAME }}
