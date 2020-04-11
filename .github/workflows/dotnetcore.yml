@@ -16,7 +16,7 @@ jobs:
           dotnet-version: 3.1.100
       
       - name: Release Build
-        run: dotnet build --configuration Release src/RemindMeal.csproj
+        run: dotnet build --configuration Debug src/RemindMeal.csproj
 
       - name: Debug Build
         run: dotnet build --configuration Release src/RemindMeal.csproj
