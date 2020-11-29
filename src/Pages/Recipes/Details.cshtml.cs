@@ -34,7 +34,13 @@ namespace RemindMeal.Pages.Recipes
                 return NotFound();
             }
 
-            Recipe = await _context.Recipes.FirstOrDefaultAsync(m => m.Id == id);
+            Recipe = await _context
+                .Recipes
+                .Include(recipe => recipe.Cookings)
+                .ThenInclude(cooking => cooking.Meal)
+                .ThenInclude(meal => meal.Presences)
+                .ThenInclude(presence => presence.Friend)
+                .FirstOrDefaultAsync(m => m.Id == id);
 
             if (Recipe == null)
             {
