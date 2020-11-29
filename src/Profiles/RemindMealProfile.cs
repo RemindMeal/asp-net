@@ -38,7 +38,9 @@ namespace RemindMeal.Profiles
                 .ForMember(mealView => mealView.AvailableFriends, opt => opt.Ignore())
                 .ForMember(mealView => mealView.AvailableRecipes, opt => opt.Ignore())
                 .ForMember(mealView => mealView.SelectedFriendIds, opt => opt.MapFrom(meal => meal.Presences.Select(p => p.FriendId).ToImmutableArray()))
-                .ForMember(mealView => mealView.SelectedRecipeIds, opt => opt.MapFrom(meal => meal.Cookings.Select(c => c.RecipeId).ToImmutableArray()));
+                .ForMember(mealView => mealView.SelectedRecipeIds, opt => opt.MapFrom(meal => meal.Cookings.Select(c => c.RecipeId).ToImmutableArray()))
+                .ForMember(mealView => mealView.Friends, opt => opt.MapFrom(meal => meal.Presences.Select(p => p.Friend).ToImmutableArray()))
+                .ForMember(mealView => mealView.Recipes, opt => opt.MapFrom(meal => meal.Cookings.Select(p => p.Recipe).ToImmutableArray()));
         }
     }
 }
