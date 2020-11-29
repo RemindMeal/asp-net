@@ -25,6 +25,16 @@
     </dl>
 </div>
 <div>
+    <hr />
+    La recette "@Model.Recipe.Name" a déjà été goûté (et appréciée !) par :
+
+    <ul>
+    @foreach (var (friend, count) in Model.Friends) {
+        <li><a asp-page="../Friends/Details" asp-route-id="@friend.Id">@friend</a> (@count fois)</li>
+    }
+    </ul>
+</div>
+<div>
     <a asp-page="./Edit" asp-route-id="@Model.Recipe.Id" class="btn btn-warning">Modifier</a>
     <a asp-page="./Index" class="btn btn-primary">Retour à la liste</a>
 </div>
