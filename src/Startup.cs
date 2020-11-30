@@ -56,8 +56,10 @@ namespace RemindMeal
                 .AddErrorDescriber<RemindMealIdentityErrorDescriber>()
                 .AddDefaultUI()
                 .AddEntityFrameworkStores<RemindMealContext>();
-
-            services.AddMvc(options =>
+            
+            services
+                .AddRazorPages()
+                .AddMvcOptions(options =>
                 {
                     // Authentication by default on all pages
                     var policy = new AuthorizationPolicyBuilder()
@@ -71,7 +73,6 @@ namespace RemindMeal
 
             // User Resolver
             services.AddSingleton<IUserResolverService, UserResolverService>();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
