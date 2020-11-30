@@ -27,7 +27,17 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Recipes[0].Name)
+                <a asp-page="./Index" asp-route-nameSortOrder="@Model.NameSortLink">
+                    @Html.DisplayNameFor(model => model.Recipes[0].Name)
+                </a>
+                @if (Model.NameSort == IndexModel.SortOrder.Ascending)
+                {
+                    <i class="fa fa-angle-up"></i>
+                }
+                else
+                {
+                    <i class="fa fa-angle-down"></i>
+                }
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Recipes[0].Type)
