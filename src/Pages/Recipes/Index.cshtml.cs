@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using RemindMeal.Data;
 using RemindMeal.Models;
+using RemindMeal.Structures;
 
 namespace RemindMeal.Pages.Recipes
 {
@@ -23,7 +23,7 @@ namespace RemindMeal.Pages.Recipes
 
         // Sort
         public SortOrder NameSort { get; set; }
-        public string NameSortLink => Convert(Invert(NameSort));
+        public string NameSortLink => NameSort.Invert().ConvertToString();
 
         // Search
         [BindProperty(SupportsGet = true)]
@@ -41,7 +41,7 @@ namespace RemindMeal.Pages.Recipes
                     r.Description.ToLower().Contains(lowerSearchString));
             }
 
-            NameSort = Convert(nameSortOrder);
+            NameSort = nameSortOrder.ToSortOrder();
 
             recipes = NameSort == SortOrder.Descending
                 ? recipes.OrderByDescending(r => r.Name)
@@ -53,41 +53,6 @@ namespace RemindMeal.Pages.Recipes
                 .ToListAsync();
         }
 
-        public enum SortOrder
-        {
-            Ascending,
-            Descending
-        }
         
-        private static SortOrder Invert(SortOrder order)
-        {
-            switch (order)
-            {
-                case SortOrder.Ascending:
-                    return SortOrder.Descending;
-                case SortOrder.Descending:
-                    return SortOrder.Ascending;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(order), order, null);
-            }
-        }
-
-        private static SortOrder Convert(string sortOrderString)
-        {
-            return sortOrderString == "desc" ? SortOrder.Descending : SortOrder.Ascending;
-        }
-
-        private static string Convert(SortOrder sortOrder)
-        {
-            switch (sortOrder)
-            {
-                case SortOrder.Ascending:
-                    return "asc";
-                case SortOrder.Descending:
-                    return "desc";
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(sortOrder), sortOrder, null);
-            }
-        }
     }
 }

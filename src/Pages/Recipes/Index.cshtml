@@ -1,4 +1,5 @@
 @page
+@using RemindMeal.Structures
 @model RemindMeal.Pages.Recipes.IndexModel
 
 @{
@@ -30,13 +31,13 @@
                 <a asp-page="./Index" asp-route-nameSortOrder="@Model.NameSortLink">
                     @Html.DisplayNameFor(model => model.Recipes[0].Name)
                 </a>
-                @if (Model.NameSort == IndexModel.SortOrder.Ascending)
+                @if (Model.NameSort == SortOrder.Ascending)
                 {
-                    <i class="fa fa-angle-up"></i>
+                    <i class="fa fa-angle-down"></i>
                 }
                 else
                 {
-                    <i class="fa fa-angle-down"></i>
+                    <i class="fa fa-angle-up"></i>
                 }
             </th>
             <th>

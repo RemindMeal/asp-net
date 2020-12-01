@@ -1,9 +1,11 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using RemindMeal.Data;
 using RemindMeal.Models;
+using RemindMeal.Structures;
 
 namespace RemindMeal.Pages.Meals
 {
@@ -17,10 +19,22 @@ namespace RemindMeal.Pages.Meals
         }
 
         public IList<Meal> Meals { get; set; }
+        
+        // Sort
+        public SortOrder DateSort { get; set; }
+        public string DateSortLink => DateSort.Invert().ConvertToString();
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(string dateSortOrder)
         {
-            Meals = await _context.Meals
+            var meals = from m in _context.Meals select m;
+
+            DateSort = dateSortOrder.ToSortOrder();
+
+            meals = DateSort == SortOrder.Descending
+                ? meals.OrderByDescending(m => m.Date)
+                : meals.OrderBy(m => m.Date);
+            
+            Meals = await meals
                 .Include(m => m.Presences)
                 .ThenInclude(p => p.Friend)
                 .Include(m => m.Cookings)
