@@ -4,7 +4,7 @@ using RemindMeal.Models;
 
 namespace RemindMeal.Pages.Friends
 {
-    public class FriendModelView
+    public class FriendView
     {
         [Display(Name = "Prénom")]
         public string Name { get; set; }
@@ -16,7 +16,7 @@ namespace RemindMeal.Pages.Friends
         public string FullName => $"{Name} {Surname}";
     }
     
-    public sealed class FriendIndexView : FriendModelView
+    public sealed class FriendIndexView : FriendView
     {
         public int Id { get; set; }
         

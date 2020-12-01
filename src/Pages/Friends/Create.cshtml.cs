@@ -25,7 +25,7 @@ namespace RemindMeal.Pages.Friends
         }
 
         [BindProperty]
-        public FriendModelView FriendMV { get; set; }
+        public FriendView FriendMV { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {

@@ -11,7 +11,7 @@ namespace RemindMeal.Profiles
     {
         public RemindMealProfile()
         {
-            CreateMap<FriendModelView, Friend>()
+            CreateMap<FriendView, Friend>()
                 .ForMember(friend => friend.Id, opt => opt.Ignore())
                 .ForMember(friend => friend.User, opt => opt.Ignore());
 
