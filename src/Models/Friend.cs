@@ -21,6 +21,7 @@ namespace RemindMeal.Models
         [Display(Name = "Nom")]
         public string Surname { get; set; }
         
+        [Display(Name = "Nom")]
         public string FullName => $"{Name} {Surname}";
         
         // Relationships

@@ -25,7 +25,10 @@ namespace RemindMeal.Pages.Friends
         public async Task OnGetAsync()
         {
             var user = await _userManager.GetUserAsync(User);
-            Friends = await _context.Friends.Where(friend => friend.User == user).ToListAsync();
+            Friends = await _context
+                .Friends
+                .Where(friend => friend.User == user)
+                .ToListAsync();
         }
     }
 }
