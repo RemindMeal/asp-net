@@ -14,11 +14,11 @@ namespace RemindMeal.Models
         public int Id { get; set; }
 
         [Required]
-        [Display(Name = "Nom")]
+        [Display(Name = "Prénom")]
         public string Name { get; set; }
 
         [Required]
-        [Display(Name = "Prénom")]
+        [Display(Name = "Nom")]
         public string Surname { get; set; }
         
         public string FullName => $"{Name} {Surname}";
