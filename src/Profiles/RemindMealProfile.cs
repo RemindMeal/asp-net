@@ -3,6 +3,7 @@ using System.Linq;
 using AutoMapper;
 using RemindMeal.Models;
 using RemindMeal.ModelViews;
+using RemindMeal.Pages.Friends;
 
 namespace RemindMeal.Profiles
 {
