@@ -25,7 +25,6 @@ namespace RemindMeal.Data
         public DbSet<Friend> Friends { get; set; }
         public DbSet<Presence> Participations { get; set; }
         public DbSet<Cooking> Cookings { get; set; }
-        public DbSet<Tag> Tags { get; set; }
 
         public User GetCurrentUser()
         {
@@ -57,17 +56,6 @@ namespace RemindMeal.Data
                 .WithMany(m => m.Presences)
                 .HasForeignKey(p => p.MealId);
 
-            // Recipe <--> Tag via RecipeTag
-            modelBuilder.Entity<RecipeTag>().HasKey(rt => new {rt.RecipeId, rt.TagId});
-            modelBuilder.Entity<RecipeTag>()
-                .HasOne(rt => rt.Recipe)
-                .WithMany(r => r.RecipeTags)
-                .HasForeignKey(rt => rt.RecipeId);
-            modelBuilder.Entity<RecipeTag>()
-                .HasOne(rt => rt.Tag)
-                .WithMany(tag => tag.RecipeTags)
-                .HasForeignKey(rt => rt.TagId);
-            
             // RecipeType
             modelBuilder.Entity<Recipe>()
                 .Property(r => r.Type)

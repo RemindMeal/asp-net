@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using RemindMeal.Models;
 
 namespace RemindMeal.ModelViews
@@ -18,9 +16,5 @@ namespace RemindMeal.ModelViews
 
         [Display(Name = "Type")]
         public RecipeType Type { get; set; }
-
-        [Display(Name = "Tags")]
-        public ICollection<int> SelectedTagIds { get; set; } = new List<int>();
-        public SelectList AvailableTags { get; set; }
     }
 }

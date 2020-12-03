@@ -47,10 +47,7 @@ namespace RemindMeal.Pages.Recipes
                 ? recipes.OrderByDescending(r => r.Name)
                 : recipes.OrderBy(r => r.Name);
 
-            Recipes = await recipes
-                .Include(r => r.RecipeTags)
-                .ThenInclude(rt => rt.Tag)
-                .ToListAsync();
+            Recipes = await recipes.ToListAsync();
         }
 
         
