@@ -1,13 +1,10 @@
-using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RemindMeal.Data;
-using RemindMeal.Models;
 using RemindMeal.ModelViews;
 
 namespace RemindMeal.Pages.Recipes
@@ -33,9 +30,8 @@ namespace RemindMeal.Pages.Recipes
                 return NotFound();
             }
 
-            var recipe = await _context.Recipes.Include(r => r.RecipeTags).FirstOrDefaultAsync(m => m.Id == id);
+            var recipe = await _context.Recipes.FirstOrDefaultAsync(m => m.Id == id);
             RecipeView = _mapper.Map<RecipeModelView>(recipe);
-            RecipeView.AvailableTags = new SelectList(_context.Tags, nameof(Tag.Id), nameof(Tag.Name));
 
             if (RecipeView == null)
             {
@@ -49,13 +45,9 @@ namespace RemindMeal.Pages.Recipes
             if (!ModelState.IsValid) return Page();
 
             var recipeId = RecipeView.Id;
-            var recipe = await _context.Recipes.Include(r => r.RecipeTags).SingleAsync(r => r.Id == recipeId);
-
-            var previousTagIds = recipe.RecipeTags.Select(rt => rt.TagId).ToImmutableHashSet();
-            var selectedTags = RecipeView.SelectedTagIds.ToImmutableHashSet();
-            var newTagIds = selectedTags.Where(tagId => !previousTagIds.Contains(tagId));
-            await _context.AddRangeAsync(newTagIds.Select(tagId => new RecipeTag{RecipeId = recipeId, TagId = tagId}));
-            _context.RemoveRange(recipe.RecipeTags.Where(rt => !selectedTags.Contains(rt.TagId)));
+            var recipe = await _context.Recipes.SingleAsync(r => r.Id == recipeId);
+            
+            _context.Attach(recipe).State = EntityState.Modified;
 
             try
             {

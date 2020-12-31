@@ -17,14 +17,9 @@ namespace RemindMeal.Profiles
 
             CreateMap<RecipeModelView, Recipe>()
                 .ForMember(recipe => recipe.User, opt => opt.Ignore())
-                .ForMember(recipe => recipe.CreationDate, opt => opt.Ignore())
-                .ForMember(recipe => recipe.RecipeTags, opt => opt.MapFrom(
-                    recipeView => recipeView.SelectedTagIds.Select(tagId => new RecipeTag { RecipeId = recipeView.Id, TagId = tagId}).ToImmutableArray()));
+                .ForMember(recipe => recipe.CreationDate, opt => opt.Ignore());
 
-            CreateMap<Recipe, RecipeModelView>()
-                .ForMember(recipeView => recipeView.AvailableTags, opt => opt.Ignore())
-                .ForMember(recipeView => recipeView.SelectedTagIds, opt => opt.MapFrom(
-                    recipe => recipe.RecipeTags.Select(recipeTag => recipeTag.TagId).ToList()));
+            CreateMap<Recipe, RecipeModelView>();
 
             CreateMap<MealModelView, Meal>()
                 .ForMember(meal => meal.User, opt => opt.Ignore())

@@ -2,7 +2,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using RemindMeal.Data;
 using RemindMeal.Models;
 using RemindMeal.ModelViews;
@@ -22,10 +21,7 @@ namespace RemindMeal.Pages.Recipes
 
         public IActionResult OnGet()
         {
-            RecipeModelView = new RecipeModelView
-            {
-                AvailableTags = new SelectList(_context.Tags, nameof(Tag.Id), nameof(Tag.Name))
-            };
+            RecipeModelView = new RecipeModelView();
             return Page();
         }
 
