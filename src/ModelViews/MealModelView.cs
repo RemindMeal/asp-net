@@ -15,6 +15,7 @@ namespace RemindMeal.ModelViews
 
 		public ICollection<int> SelectedFriendIds { get; set; } = new List<int>();
 		public ICollection<int> SelectedRecipeIds { get; set; } = new List<int>();
+		public ICollection<(int,int)> SelectedRecipeIdsAndOrders { get; set; } = new List<(int,int)>();
 
 		public SelectList AvailableFriends { get; set; }
 		public SelectList AvailableRecipes { get; set; }

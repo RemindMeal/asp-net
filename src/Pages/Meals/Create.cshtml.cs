@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -38,6 +40,8 @@ namespace RemindMeal.Pages.Meals
                 return Page();
             }
 
+            Console.Write("SelectedRecipesAndOrders is ");
+            Console.WriteLine(string.Join(",", MealView.SelectedRecipeIdsAndOrders));
             var meal = _mapper.Map<Meal>(MealView);
             _context.Update(meal);
             await _context.SaveChangesAsync();

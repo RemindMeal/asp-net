@@ -30,7 +30,8 @@
             <div class="form-group">
                 <label asp-for="MealView.SelectedRecipeIds" class="control-label">Menu</label>
                 <select
-                    asp-for="MealView.SelectedRecipeIds"
+                    id="recipesPicker"
+                    asp-for="MealView.SelectedRecipeIdsAndOrders"
                     asp-items="Model.MealView.AvailableRecipes"
                     class="form-control selectpicker"
                     data-live-search="true"
@@ -50,4 +51,20 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+    let myChoices = [];
+    $('#recipesPicker').on('changed.bs.select', function(e, clickedIndex, isSelected, previousValue) {
+      let recipesPicker = document.getElementById("recipesPicker"); 
+      let selected = recipesPicker.options[clickedIndex].value;
+      console.log("clickedIndex is " + clickedIndex);
+      console.log("selected is " + selected)
+      if (myChoices.indexOf(selected) === -1) {
+        myChoices.push(selected);
+      } else {
+        myChoices.splice(myChoices.indexOf(selected), 1);
+      }
+      console.log(myChoices);
+      recipesPicker.options[clickedIndex].value = (selected, 3)
+    });
+    </script> 
 }
