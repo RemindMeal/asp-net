@@ -87,7 +87,7 @@ namespace RemindMeal
             }
             else
             {
-                var db = app.ApplicationServices.GetService<DbContext>();
+                var db = app.ApplicationServices.GetRequiredService<RemindMealContext>();
                 db.Database.Migrate();
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
