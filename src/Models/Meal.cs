@@ -18,5 +18,10 @@ namespace RemindMeal.Models
         public User User { get; set; }
         public ICollection<Presence> Presences { get; } = new List<Presence>();
         public ICollection<Cooking> Cookings { get; } = new List<Cooking>();
+
+        public override string ToString()
+        {
+            return $"Meal of {Date}";
+        }
     }
 }

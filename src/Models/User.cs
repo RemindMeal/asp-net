@@ -10,7 +10,7 @@ namespace RemindMeal.Models
             Recipes = new List<Recipe>();
         }
 
-        public IList<Recipe> Recipes { get; set;}
+        public IList<Recipe> Recipes { get; set; }
         
         public override string ToString()
         {

@@ -8,5 +8,10 @@ namespace RemindMeal.Models
         // Relationships
         public Friend Friend { get; set; }
         public Meal Meal { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Friend} at {Meal.Date}";
+        }
     }
 }
