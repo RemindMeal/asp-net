@@ -43,6 +43,9 @@ namespace RemindMeal
                 options.UseNpgsql(connectionString);
             });
 
+            // Exception filter
+            services.AddDatabaseDeveloperPageExceptionFilter();
+
             // Identity
             services
                 .AddDefaultIdentity<User>(options => { 
@@ -83,7 +86,7 @@ namespace RemindMeal
             {
                 Console.WriteLine("Using Developer Page and DB error page");
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
+                app.UseMigrationsEndPoint();
             }
             else
             {
