@@ -12,7 +12,7 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Production
   db:
-    image: postgres:11.6-alpine
+    image: postgres:13
     volumes:
       - data:/var/lib/postgresql/data
     networks:
