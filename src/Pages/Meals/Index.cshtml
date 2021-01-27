@@ -39,10 +39,20 @@
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
             <td>
-                @string.Join(",", item.Presences.Select(p => p.Friend.FullName))
+                <ul>
+                    @foreach (var presence in item.Presences)
+                    {
+                        <li>@presence.Friend.FullName</li>
+                    }
+                </ul>
             </td>
             <td>
-                @string.Join(",", item.Cookings.Select(c => c.Recipe.Name))
+                <ul>
+                    @foreach (var cooking in item.Cookings)
+                    {
+                        <li>@cooking.Recipe.Name</li>
+                    }
+                </ul>
             </td>
             <td>
                 <div class="btn-group" role="group">
