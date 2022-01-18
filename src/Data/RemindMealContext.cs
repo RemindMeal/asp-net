@@ -25,6 +25,7 @@ namespace RemindMeal.Data
         public DbSet<Friend> Friends { get; set; }
         public DbSet<Presence> Participations { get; set; }
         public DbSet<Cooking> Cookings { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         public User GetCurrentUser()
         {

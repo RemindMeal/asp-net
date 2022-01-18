@@ -26,6 +26,8 @@ namespace RemindMeal.Models
         [DisplayFormat(DataFormatString = "dd/MM/yyyy")]
         public DateTime CreationDate { get; }
 
+        public Category Category { get; set; }
+
         [Required]
         public RecipeType Type { get; set; }
 
