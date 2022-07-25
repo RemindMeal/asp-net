@@ -16,22 +16,28 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
+
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v2
         with:
           dotnet-version: '5.0.x'
+      
       - name: Restoring dependencies
         run: dotnet restore
+      
       - name: Build in Release
         run: dotnet build --no-restore --configuration Release src/RemindMeal.csproj
+      
       - name: Build in Debug with dotnet
         run: dotnet build --no-restore --configuration Debug
+      
       - name: Tests
         if: success()
         run: dotnet test --no-build
+      
       - name: Push to DockerHub
         if: success() && github.event_name == 'push'
-        uses: elgohr/Publish-Docker-Github-Action@master
+        uses: elgohr/Publish-Docker-Github-Action@v4
         with:
           name: remindmeal/remindmeal
           username: ${{ secrets.DOCKER_USERNAME }}
