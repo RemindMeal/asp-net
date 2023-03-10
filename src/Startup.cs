@@ -81,6 +81,7 @@ namespace RemindMeal
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, RemindMealContext context)
         {
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
             Console.WriteLine($"Startup: Environment is {env.EnvironmentName}");
             if (env.IsDevelopment())
             {
