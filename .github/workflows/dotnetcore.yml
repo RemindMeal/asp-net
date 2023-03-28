@@ -37,7 +37,7 @@ jobs:
       
       - name: Push to DockerHub
         if: success() && github.event_name == 'push'
-        uses: elgohr/Publish-Docker-Github-Action@v4
+        uses: elgohr/Publish-Docker-Github-Action@v5
         with:
           name: remindmeal/remindmeal
           username: ${{ secrets.DOCKER_USERNAME }}
