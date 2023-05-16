@@ -4,11 +4,11 @@ using Xunit;
 
 namespace RemindMeal.Tests
 {
-    public sealed class BasicTests : IClassFixture<WebApplicationFactory<Startup>>
+    public sealed class BasicTests : IClassFixture<WebApplicationFactory<Program>>
     {
-        private readonly WebApplicationFactory<Startup> _factory;
+        private readonly WebApplicationFactory<Program> _factory;
 
-        public BasicTests(WebApplicationFactory<Startup> factory)
+        public BasicTests(WebApplicationFactory<Program> factory)
         {
             _factory = factory;
         }

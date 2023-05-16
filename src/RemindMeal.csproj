@@ -2,6 +2,7 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <UserSecretsId>aspnet-RemindMeal-45D000C1-B17F-4692-A437-E638EFA4C02F</UserSecretsId>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0"/>
@@ -18,5 +19,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas"/>
+    <InternalsVisibleTo Include="RemindMeal.Tests" />
   </ItemGroup>
 </Project>
