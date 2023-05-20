@@ -43,13 +43,12 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Sets env vars for master
-        if: env.GITHUB_REF == 'master'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           echo "DOCKER_IMAGE_TAG=latest" >> $GITHUB_ENV
 
-
       - name: Sets env vars for PR
-        if: env.GITHUB_REF != 'master'
+        if: github.event_name == 'pull_request'
         run: |
           echo "DOCKER_IMAGE_TAG=pr${{ github.event.number }}" >> $GITHUB_ENV
 
