@@ -34,14 +34,6 @@ jobs:
       - name: Tests
         if: success()
         run: dotnet test --no-build
-      
-      - name: Push to DockerHub
-        if: success() && github.event_name == 'push'
-        uses: elgohr/Publish-Docker-Github-Action@v5
-        with:
-          name: remindmeal/remindmeal
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Login to Docker Hub
         uses: docker/login-action@v2
