@@ -42,6 +42,17 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Sets env vars for master
+        if: env.GITHUB_REF == 'master'
+        run: |
+          echo "DOCKER_IMAGE_TAG=latest" >> $GITHUB_ENV
+
+
+      - name: Sets env vars for PR
+        if: env.GITHUB_REF != 'master'
+        run: |
+          echo "DOCKER_IMAGE_TAG=pr${{ github.event.number }}" >> $GITHUB_ENV
+
       - name: Build and push
         if: success()
         uses: docker/build-push-action@v4
@@ -49,4 +60,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: remindmeal/remindmeal:latest
+          tags: remindmeal/remindmeal:${{ env.DOCKER_IMAGE_TAG }}
