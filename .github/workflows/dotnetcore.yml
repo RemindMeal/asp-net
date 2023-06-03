@@ -59,4 +59,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: remindmeal/remindmeal:${{ env.DOCKER_IMAGE_TAG }}
+          tags: remindmeal/asp-net:${{ env.DOCKER_IMAGE_TAG }}
