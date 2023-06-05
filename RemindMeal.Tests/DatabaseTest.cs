@@ -55,7 +55,7 @@ namespace RemindMeal.Tests
             new Recipe
             {
                 Name = "Tiramisu",
-                Description = "Dessert Italien à la crème de Mascarapone et au café.",
+                Description = "Dessert Italien à la crème de mascarpone et au café.",
                 Type = RecipeType.Dessert,
                 User = User
             });
