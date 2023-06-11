@@ -52,7 +52,7 @@ builder.Services
     });
 
 // AutoMapper for mapping between Models <--> ViewModels
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 // User Resolver
 builder.Services.AddSingleton<IUserResolverService, UserResolverService>();
