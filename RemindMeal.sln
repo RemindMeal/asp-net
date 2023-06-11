@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemindMeal", "RemindMeal\RemindMeal.csproj", "{47E50C51-3247-4C85-BE76-A01E6682BE5B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemindMealData", "RemindMeal.Data\RemindMealData.csproj", "{779C2203-E9DF-4113-89A0-88D92850A7FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemindMeal.Tests", "RemindMeal.Tests\RemindMeal.Tests.csproj", "{98CF0815-0B66-4FB6-BD02-2F33900E7524}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemindMeal", "RemindMeal.App\RemindMeal.csproj", "{5AA9866D-4A61-422D-A763-67AC873D9C2E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemindMeal.Tests", "RemindMeal.App.Tests\RemindMeal.Tests.csproj", "{14D5E145-385F-4A9D-A6CF-D66BC3AC3436}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,13 +18,17 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{47E50C51-3247-4C85-BE76-A01E6682BE5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{47E50C51-3247-4C85-BE76-A01E6682BE5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{47E50C51-3247-4C85-BE76-A01E6682BE5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{47E50C51-3247-4C85-BE76-A01E6682BE5B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{98CF0815-0B66-4FB6-BD02-2F33900E7524}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{98CF0815-0B66-4FB6-BD02-2F33900E7524}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{98CF0815-0B66-4FB6-BD02-2F33900E7524}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{98CF0815-0B66-4FB6-BD02-2F33900E7524}.Release|Any CPU.Build.0 = Release|Any CPU
+		{779C2203-E9DF-4113-89A0-88D92850A7FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{779C2203-E9DF-4113-89A0-88D92850A7FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{779C2203-E9DF-4113-89A0-88D92850A7FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{779C2203-E9DF-4113-89A0-88D92850A7FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AA9866D-4A61-422D-A763-67AC873D9C2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AA9866D-4A61-422D-A763-67AC873D9C2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AA9866D-4A61-422D-A763-67AC873D9C2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AA9866D-4A61-422D-A763-67AC873D9C2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14D5E145-385F-4A9D-A6CF-D66BC3AC3436}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14D5E145-385F-4A9D-A6CF-D66BC3AC3436}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14D5E145-385F-4A9D-A6CF-D66BC3AC3436}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14D5E145-385F-4A9D-A6CF-D66BC3AC3436}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -1,0 +1,46 @@
+@page
+@model RemindMeal.Pages.Recipes.CreateModel
+
+@{
+    ViewData["title"] = "Nouvelle recette";
+}
+
+<h4>Enregistrer une nouvelle recette</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="RecipeModelView.Name" class="control-label"></label>
+                <input asp-for="RecipeModelView.Name" class="form-control" />
+                <span asp-validation-for="RecipeModelView.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RecipeModelView.Description" class="control-label"></label>
+                <textarea asp-for="RecipeModelView.Description" class="form-control"></textarea>
+                <span asp-validation-for="RecipeModelView.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RecipeModelView.Type" class="control-label"></label>
+                <select asp-for="RecipeModelView.Type" asp-items="Html.GetEnumSelectList<RecipeType>()"
+                    class="form-control selectpicker"></select>
+                <span asp-validation-for="RecipeModelView.Type" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Créer" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">
+        Retour à la liste
+    </a>
+</div>
+
+@section Scripts {
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
