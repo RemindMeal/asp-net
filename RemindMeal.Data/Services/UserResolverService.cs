@@ -17,7 +17,7 @@ public class UserResolverService : IUserResolverService
     {
         _httpContextAccessor = httpContextAccessor;
     }
-
+    
     public User GetCurrentSessionUser(RemindMealContext context)
     {
         string userName = _httpContextAccessor.HttpContext.User?.Identity?.Name;

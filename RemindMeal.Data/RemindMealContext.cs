@@ -76,7 +76,7 @@ public class RemindMealContext : IdentityDbContext<User>
     }
 }
 
-public static class ChangeTrackerExtensions
+internal static class ChangeTrackerExtensions
 {
     public static void ProcessCreation(this ChangeTracker changeTracker, User user)
     {

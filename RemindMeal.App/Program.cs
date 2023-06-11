@@ -2,10 +2,11 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
-using RemindMealData;
 using RemindMealData.Models;
 using RemindMeal.Services;
 using Microsoft.AspNetCore.HttpOverrides;
+using RemindMealData.DependencyInjection;
+using RemindMealData.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +18,7 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
 });
 
 // Database
-builder.Services.AddDbContext<RemindMealContext>(options =>
+builder.Services.AddRemindMealDbContext(options =>
 {
     var connectionString = builder.Configuration.GetConnectionString("db");
     options.UseNpgsql(connectionString);
@@ -38,7 +39,7 @@ builder.Services
     })
     .AddErrorDescriber<RemindMealIdentityErrorDescriber>()
     .AddDefaultUI()
-    .AddEntityFrameworkStores<RemindMealContext>();
+    .AddRemindMealEntityFrameworkStores();
 
 builder.Services
     .AddRazorPages()
@@ -55,7 +56,7 @@ builder.Services
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 // User Resolver
-builder.Services.AddSingleton<IUserResolverService, UserResolverService>();
+builder.Services.AddRemindMealDataServices();
 
 var app = builder.Build();
 
@@ -70,8 +71,7 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
-    var db = app.Services.GetRequiredService<RemindMealContext>();
-    db.Database.Migrate();
+    MigrationsServices.DBMigrate(app.Services);
     app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
