@@ -28,6 +28,9 @@ jobs:
       - name: Build in Release
         run: dotnet build --no-restore --configuration Release
 
+      - name: Build in Debug with dotnet
+        run: dotnet build --no-restore --configuration Debug
+
       - name: Tests
         if: success()
         run: dotnet test --no-build
