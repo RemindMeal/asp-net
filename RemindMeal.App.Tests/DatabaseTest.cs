@@ -37,26 +37,32 @@ namespace RemindMeal.Tests
             }
         );
 
+        private static readonly Category Starter = new Category { Name = "Entrées" };
+        private static readonly Category Main = new Category { Name = "Plat principal" };
+        private static readonly Category Dessert = new Category { Name = "Plat principal" };
+
+        private static readonly ImmutableArray<Category> Categories = ImmutableArray.Create(Starter, Main, Dessert);
+
         private static readonly ImmutableArray<Recipe> Recipes = ImmutableArray.Create(
             new Recipe
             {
                 Name = "Poulet aux olives",
                 Description = "Ben poulet avec des olives",
-                Type = RecipeType.Main,
+                Type = Main,
                 User = User
             },
             new Recipe
             {
                 Name = "Salade de noix",
                 Description = string.Empty,
-                Type = RecipeType.Starter,
+                Type = Starter,
                 User = User
             },
             new Recipe
             {
                 Name = "Tiramisu",
                 Description = "Dessert Italien à la crème de mascarpone et au café.",
-                Type = RecipeType.Dessert,
+                Type = Dessert,
                 User = User
             });
 
@@ -104,19 +110,20 @@ namespace RemindMeal.Tests
             {
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
+                context.Categories.AddRange(Categories);
                 context.Recipes.AddRange(Recipes);
                 context.SaveChanges();   
             }
 
             using (var context = CreateContext())
             {
-                var recipes = context.Recipes.ToList();
+                var recipes = context.Recipes.Include(recipe => recipe.Type).ToList();
                 Assert.Equal(Recipes.Length, recipes.Count);
                 foreach (var (expected, actual) in Recipes.Zip(recipes))
                 {
                     Assert.Equal(expected.Name, actual.Name);
                     Assert.Equal(expected.Description, actual.Description);
-                    Assert.Equal(expected.Type, actual.Type);
+                    Assert.Equal(expected.Type.Name, actual.Type.Name);
                 }
             }
         }
@@ -157,7 +164,7 @@ namespace RemindMeal.Tests
                 }
 
                 context.Add(meal);
-                Assert.Equal(13, context.SaveChanges());
+                Assert.Equal(16, context.SaveChanges());
             }
 
             using (var context = CreateContext())

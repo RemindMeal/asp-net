@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using RemindMealData;
 using RemindMealData.Models;
 using RemindMeal.ModelViews;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace RemindMeal.Pages.Recipes
 {
@@ -22,6 +23,7 @@ namespace RemindMeal.Pages.Recipes
         public IActionResult OnGet()
         {
             RecipeModelView = new RecipeModelView();
+            RecipeModelView.Categories = new SelectList(_context.Categories, nameof(Category.Id), nameof(Category.Name));
             return Page();
         }
 

@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using RemindMealData.Models;
 
 namespace RemindMeal.ModelViews
@@ -15,6 +16,9 @@ namespace RemindMeal.ModelViews
         public string Description { get; set; }
 
         [Display(Name = "Type")]
-        public RecipeType Type { get; set; }
+        public Category Type { get; set; }
+
+        [Display(Name = "Categories")]
+        public SelectList Categories { get; set; }
     }
 }

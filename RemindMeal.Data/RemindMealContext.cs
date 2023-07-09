@@ -22,6 +22,7 @@ public class RemindMealContext : IdentityDbContext<User>
     public DbSet<Friend> Friends { get; set; }
     public DbSet<Presence> Participations { get; set; }
     public DbSet<Cooking> Cookings { get; set; }
+    public DbSet<Category> Categories { get; set; }
 
     public User GetCurrentUser()
     {
@@ -53,10 +54,11 @@ public class RemindMealContext : IdentityDbContext<User>
             .WithMany(m => m.Presences)
             .HasForeignKey(p => p.MealId);
 
-        // RecipeType
+        // Recipe <--> Category
         modelBuilder.Entity<Recipe>()
-            .Property(r => r.Type)
-            .HasConversion(new EnumToStringConverter<RecipeType>());
+            .HasOne<Category>(r => r.Type)
+            .WithMany(c => c.Recipes)
+            .IsRequired();
 
         modelBuilder.Entity<Recipe>().HasQueryFilter(r => r.User.Id == GetCurrentUser().Id);
         modelBuilder.Entity<Friend>().HasQueryFilter(f => f.User.Id == GetCurrentUser().Id);

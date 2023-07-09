@@ -25,7 +25,7 @@ public sealed class Recipe : IHasUser
     public DateTime CreationDate { get; }
 
     [Required]
-    public RecipeType Type { get; set; }
+    public Category Type { get; set; }
 
     // Relationships
     [Required]
@@ -36,22 +36,4 @@ public sealed class Recipe : IHasUser
     {
         return Name;
     }
-}
-
-public enum RecipeType
-{
-    [Display(Name = "Apéritif")]
-    Aperitif,
-    [Display(Name = "Entrée")]
-    Starter,
-    [Display(Name = "Plat principal")]
-    Main,
-    [Display(Name = "Soupe")]
-    Soup,
-    [Display(Name = "Viande")]
-    Meat,
-    [Display(Name = "Légumes")]
-    Side,
-    [Display(Name = "Dessert")]
-    Dessert
 }
