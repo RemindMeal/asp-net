@@ -15,8 +15,8 @@ namespace RemindMeal.ModelViews
         [Display(Name = "Description")]
         public string Description { get; set; }
 
-        [Display(Name = "Type")]
-        public Category Type { get; set; }
+        [Display(Name = "Category")]
+        public Category Category { get; set; }
 
         [Display(Name = "Categories")]
         public SelectList Categories { get; set; }

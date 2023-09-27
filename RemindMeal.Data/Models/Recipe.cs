@@ -25,7 +25,7 @@ public sealed class Recipe : IHasUser
     public DateTime CreationDate { get; }
 
     [Required]
-    public Category Type { get; set; }
+    public Category Category { get; set; }
 
     // Relationships
     [Required]

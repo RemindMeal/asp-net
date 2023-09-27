@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using System.Reflection.Emit;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RemindMealData.Models;
 using RemindMeal.Services;
 
@@ -56,7 +56,7 @@ public class RemindMealContext : IdentityDbContext<User>
 
         // Recipe <--> Category
         modelBuilder.Entity<Recipe>()
-            .HasOne<Category>(r => r.Type)
+            .HasOne<Category>(r => r.Category)
             .WithMany(c => c.Recipes)
             .IsRequired();
 
@@ -64,7 +64,6 @@ public class RemindMealContext : IdentityDbContext<User>
         modelBuilder.Entity<Friend>().HasQueryFilter(f => f.User.Id == GetCurrentUser().Id);
         modelBuilder.Entity<Meal>().HasQueryFilter(m => m.User.Id == GetCurrentUser().Id);
     }
-
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
     {

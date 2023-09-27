@@ -22,9 +22,9 @@
                 <span asp-validation-for="RecipeModelView.Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="RecipeModelView.Type" class="control-label"></label>
+                <label asp-for="RecipeModelView.Category" class="control-label"></label>
                 <select
-                    asp-for="RecipeModelView.Type"
+                    asp-for="RecipeModelView.Category"
                     asp-items="Model.RecipeModelView.Categories"
                     class="form-control selectpicker"
                     data-live-search="true"
@@ -35,7 +35,7 @@
                     asp-items="Html.GetEnumSelectList<RecipeType>()"
                     class="form-control selectpicker">
                 </select> *@
-                <span asp-validation-for="RecipeModelView.Type" class="text-danger"></span>
+                <span asp-validation-for="RecipeModelView.Category" class="text-danger"></span>
             </div>
 
             <div class="form-group">

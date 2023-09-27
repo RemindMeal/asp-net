@@ -24,9 +24,9 @@
                 <span asp-validation-for="RecipeView.Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="RecipeView.Type" class="control-label"></label>
+                <label asp-for="RecipeView.Category" class="control-label"></label>
                 <select
-                    asp-for="RecipeView.Type"
+                    asp-for="RecipeView.Category"
                     asp-items="Model.RecipeView.Categories"
                     class="form-control selectpicker"
                     data-live-search="true"
@@ -37,7 +37,7 @@
                     asp-items="Html.GetEnumSelectList<RecipeType>()"
                     class="form-control selectpicker">
                 </select> *@
-                <span asp-validation-for="RecipeView.Type" class="text-danger"></span>
+                <span asp-validation-for="RecipeView.Category" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <a asp-page="./Index" class="btn btn-secondary">

@@ -48,21 +48,21 @@ namespace RemindMeal.Tests
             {
                 Name = "Poulet aux olives",
                 Description = "Ben poulet avec des olives",
-                Type = Main,
+                Category = Main,
                 User = User
             },
             new Recipe
             {
                 Name = "Salade de noix",
                 Description = string.Empty,
-                Type = Starter,
+                Category = Starter,
                 User = User
             },
             new Recipe
             {
                 Name = "Tiramisu",
                 Description = "Dessert Italien à la crème de mascarpone et au café.",
-                Type = Dessert,
+                Category = Dessert,
                 User = User
             });
 
@@ -117,13 +117,13 @@ namespace RemindMeal.Tests
 
             using (var context = CreateContext())
             {
-                var recipes = context.Recipes.Include(recipe => recipe.Type).ToList();
+                var recipes = context.Recipes.Include(recipe => recipe.Category).ToList();
                 Assert.Equal(Recipes.Length, recipes.Count);
                 foreach (var (expected, actual) in Recipes.Zip(recipes))
                 {
                     Assert.Equal(expected.Name, actual.Name);
                     Assert.Equal(expected.Description, actual.Description);
-                    Assert.Equal(expected.Type.Name, actual.Type.Name);
+                    Assert.Equal(expected.Category.Name, actual.Category.Name);
                 }
             }
         }

@@ -19,7 +19,7 @@ namespace RemindMeal.Pages.Recipes
             _context = context;
         }
 
-        public IList<Recipe> Recipes { get; set; }
+        public List<Recipe> Recipes { get; set; }
 
         // Sort
         public SortOrder NameSort { get; set; }
@@ -31,7 +31,7 @@ namespace RemindMeal.Pages.Recipes
 
         public async Task OnGetAsync(string nameSortOrder)
         {
-            var recipes = from m in _context.Recipes select m;
+            var recipes = from m in _context.Recipes.Include(r => r.Category) select m;
             
             if (!string.IsNullOrEmpty(SearchString))
             {
