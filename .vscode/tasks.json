@@ -16,13 +16,11 @@
             "type": "shell",
             "args": [
                 "build",
-                // Ask dotnet build to generate full paths for file names.
                 "/property:GenerateFullPaths=true",
-                // Do not generate summary otherwise it leads to duplicate errors in Problems panel
                 "/consoleloggerparameters:NoSummary"
             ],
             "group": {
-                "kind": "build",
+                "kind": "test",
                 "isDefault": true
             },
             "problemMatcher": "$msCompile"
@@ -33,15 +31,25 @@
             "type": "shell",
             "args": [
                 "run",
-                // Ask dotnet build to generate full paths for file names.
                 "/property:GenerateFullPaths=true",
-                // Do not generate summary otherwise it leads to duplicate errors in Problems panel
                 "/consoleloggerparameters:NoSummary",
-                "--project", "src"
+                "--project",
+                "src"
             ],
             "group": {
                 "kind": "build",
                 "isDefault": false
+            },
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "test",
+            "command": "dotnet",
+            "type": "shell",
+            "args": [ "test" ],
+            "group": {
+                "kind": "test",
+                "isDefault": true
             },
             "problemMatcher": "$msCompile"
         }
