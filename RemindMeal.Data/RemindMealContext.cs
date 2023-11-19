@@ -11,6 +11,10 @@ public class RemindMealContext : IdentityDbContext<User>
 {
     private readonly IUserResolverService _userResolverService;
 
+    public RemindMealContext(DbContextOptions<RemindMealContext> options)
+        : base(options)
+    {}
+
     public RemindMealContext(DbContextOptions<RemindMealContext> options, IUserResolverService userResolverService)
         : base(options)
     {
@@ -67,7 +71,7 @@ public class RemindMealContext : IdentityDbContext<User>
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
     {
         var user = GetCurrentUser();
-        if (!(user is null))
+        if (user is not null)
         {
             ChangeTracker.DetectChanges();
             ChangeTracker.ProcessCreation(user);
