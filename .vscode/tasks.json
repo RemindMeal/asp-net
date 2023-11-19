@@ -11,22 +11,7 @@
     },
     "tasks": [
         {
-            "label": "build",
-            "command": "dotnet",
-            "type": "shell",
-            "args": [
-                "build",
-                "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary"
-            ],
-            "group": {
-                "kind": "test",
-                "isDefault": true
-            },
-            "problemMatcher": "$msCompile"
-        },
-        {
-            "label": "run",
+            "label": ".NET CLI run",
             "command": "dotnet",
             "type": "shell",
             "args": [
@@ -34,7 +19,7 @@
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary",
                 "--project",
-                "src"
+                "RemindMeal.App"
             ],
             "group": {
                 "kind": "build",
@@ -46,12 +31,31 @@
             "label": "test",
             "command": "dotnet",
             "type": "shell",
-            "args": [ "test" ],
+            "args": [
+                "test"
+            ],
             "group": {
                 "kind": "test",
                 "isDefault": true
             },
             "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "PostgreSQL Docker",
+            "command": "docker",
+            "args": [
+                "run",
+                "--rm",
+                "--name",
+                "remindmeal",
+                "--env-file",
+                ".env",
+                "-p",
+                "5432:5432",
+                "-d",
+                "postgres:13"
+            ],
+            "problemMatcher": []
         }
     ]
 }
