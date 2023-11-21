@@ -3,4 +3,5 @@
 **/wwwroot/
 **/.vscode
 **/.vs
+**/.github/
 Dockerfile*
