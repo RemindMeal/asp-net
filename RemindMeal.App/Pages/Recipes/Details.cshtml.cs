@@ -1,21 +1,14 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using RemindMealData;
 using RemindMealData.Models;
 
 namespace RemindMeal.Pages.Recipes
 {
-    public class DetailsModel : PageModel
+    public class DetailsModel :  BaseDetailsModel
     {
-        private readonly RemindMealContext _context;
-
-        public DetailsModel(RemindMealContext context)
+        public DetailsModel(RemindMealContext context) : base(context)
         {
-            _context = context;
         }
 
         public Recipe Recipe { get; set; }
@@ -34,7 +27,7 @@ namespace RemindMeal.Pages.Recipes
                 return NotFound();
             }
 
-            Recipe = await _context
+            Recipe = await Context
                 .Recipes
                 .Include(recipe => recipe.Cookings)
                 .ThenInclude(cooking => cooking.Meal)
