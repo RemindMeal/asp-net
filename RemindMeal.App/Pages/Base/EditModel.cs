@@ -4,9 +4,9 @@ using RemindMealData;
 
 namespace RemindMeal.Pages;
 
-public class BaseCreateModel : PageModel
+public class BaseEditModel : PageModel
 {
-    public BaseCreateModel(RemindMealContext context, IMapper mapper)
+    public BaseEditModel(RemindMealContext context, IMapper mapper)
     {
         Context = context;
         Mapper = mapper;

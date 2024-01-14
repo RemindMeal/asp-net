@@ -6,7 +6,7 @@ using RemindMeal.ModelViews;
 
 namespace RemindMeal.Pages.Recipes;
 
-public sealed class CreateModel : BaseCreateModel
+public sealed class CreateModel : BaseEditModel
 {
     public CreateModel(RemindMealContext context, IMapper mapper) : base(context, mapper)
     {

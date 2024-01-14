@@ -1,70 +1,66 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using RemindMealData;
 using RemindMealData.Models;
 
-namespace RemindMeal.Pages.Friends
-{
-    public sealed class EditModel : PageModel
-    {
-        private readonly RemindMealContext _context;
+namespace RemindMeal.Pages.Friends;
 
-        public EditModel(RemindMealContext context)
+public sealed class EditModel : BaseEditModel
+{
+    public EditModel(RemindMealContext context, IMapper mapper) : base(context, mapper)
+    {
+    }
+
+    [BindProperty]
+    public Friend Friend { get; set; }
+
+    public async Task<IActionResult> OnGetAsync(int? id)
+    {
+        if (id == null)
         {
-            _context = context;
+            return NotFound();
         }
 
-        [BindProperty]
-        public Friend Friend { get; set; }
+        Friend = await Context.Friends.FirstOrDefaultAsync(m => m.Id == id);
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        if (Friend == null)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            return NotFound();
+        }
+        return Page();
+    }
 
-            Friend = await _context.Friends.FirstOrDefaultAsync(m => m.Id == id);
-
-            if (Friend == null)
-            {
-                return NotFound();
-            }
+    public async Task<IActionResult> OnPostAsync()
+    {
+        if (!ModelState.IsValid)
+        {
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        Context.Attach(Friend).State = EntityState.Modified;
+
+        try
         {
-            if (!ModelState.IsValid)
+            await Context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!FriendExists(Friend.Id))
             {
-                return Page();
+                return NotFound();
             }
-
-            _context.Attach(Friend).State = EntityState.Modified;
-
-            try
+            else
             {
-                await _context.SaveChangesAsync();
+                throw;
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!FriendExists(Friend.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return RedirectToPage("./Index");
         }
 
-        private bool FriendExists(int id)
-        {
-            return _context.Friends.Any(e => e.Id == id);
-        }
+        return RedirectToPage("./Index");
+    }
+
+    private bool FriendExists(int id)
+    {
+        return Context.Friends.Any(e => e.Id == id);
     }
 }

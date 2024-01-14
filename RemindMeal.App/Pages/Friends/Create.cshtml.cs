@@ -5,7 +5,7 @@ using RemindMealData.Models;
 
 namespace RemindMeal.Pages.Friends;
 
-public sealed class CreateModel : BaseCreateModel
+public sealed class CreateModel : BaseEditModel
 {
     public CreateModel(RemindMealContext context, IMapper mapper) : base(context, mapper)
     {}
