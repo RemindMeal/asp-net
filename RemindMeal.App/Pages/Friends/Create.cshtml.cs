@@ -1,42 +1,34 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using RemindMealData;
 using RemindMealData.Models;
 
-namespace RemindMeal.Pages.Friends
+namespace RemindMeal.Pages.Friends;
+
+public sealed class CreateModel : BaseCreateModel
 {
-    public class CreateModel : PageModel
+    public CreateModel(RemindMealContext context, IMapper mapper) : base(context, mapper)
+    {}
+
+    public IActionResult OnGet()
     {
-        private readonly RemindMealContext _context;
-        private readonly IMapper _mapper;
+        return Page();
+    }
 
-        public CreateModel(RemindMealContext context, IMapper mapper)
-        {
-            _context = context;
-            _mapper = mapper;
-        }
+    [BindProperty]
+    public FriendView FriendMV { get; set; }
 
-        public IActionResult OnGet()
+    public async Task<IActionResult> OnPostAsync()
+    {
+        if (!ModelState.IsValid)
         {
             return Page();
         }
 
-        [BindProperty]
-        public FriendView FriendMV { get; set; }
+        var friend = Mapper.Map<Friend>(FriendMV);
+        Context.Friends.Add(friend);
+        await Context.SaveChangesAsync();
 
-        public async Task<IActionResult> OnPostAsync()
-        {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
-            var friend = _mapper.Map<Friend>(FriendMV);
-            _context.Friends.Add(friend);
-            await _context.SaveChangesAsync();
-
-            return RedirectToPage("./Index");
-        }
+        return RedirectToPage("./Index");
     }
 }
