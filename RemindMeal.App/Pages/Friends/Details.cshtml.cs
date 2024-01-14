@@ -5,7 +5,7 @@ using RemindMealData.Models;
 
 namespace RemindMeal.Pages.Friends;
 
-public sealed class DetailsModel : BaseDetailsModel
+public sealed class DetailsModel : ReadModel
 {
     public DetailsModel(RemindMealContext context) : base(context)
     {

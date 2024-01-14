@@ -5,7 +5,7 @@ using RemindMealData.Models;
 
 namespace RemindMeal.Pages.Recipes
 {
-    public class DetailsModel :  BaseDetailsModel
+    public class DetailsModel : ReadModel
     {
         public DetailsModel(RemindMealContext context) : base(context)
         {

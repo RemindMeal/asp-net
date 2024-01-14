@@ -6,7 +6,7 @@ using RemindMeal.ModelViews;
 
 namespace RemindMeal.Pages.Meals;
 
-public class DetailsModel : BaseDetailsModel
+public class DetailsModel : ReadModel
 {
     public DetailsModel(RemindMealContext context, IMapper mapper) : base(context)
     {
