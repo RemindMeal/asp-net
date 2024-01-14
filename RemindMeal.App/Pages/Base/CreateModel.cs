@@ -2,7 +2,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using RemindMealData;
 
-namespace RemindMeal.Pages.Friends;
+namespace RemindMeal.Pages;
 
 public class BaseCreateModel : PageModel
 {

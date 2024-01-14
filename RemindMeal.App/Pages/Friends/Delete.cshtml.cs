@@ -1,55 +1,50 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using RemindMealData;
 using RemindMealData.Models;
 
-namespace RemindMeal.Pages.Friends
+namespace RemindMeal.Pages.Friends;
+
+public class DeleteModel : BaseDeleteModel
 {
-    public class DeleteModel : PageModel
+    public DeleteModel(RemindMealContext context) : base(context)
     {
-        private readonly RemindMealContext _context;
+    }
 
-        public DeleteModel(RemindMealContext context)
+    [BindProperty]
+    public Friend Friend { get; set; }
+
+    public async Task<IActionResult> OnGetAsync(int? id)
+    {
+        if (id == null)
         {
-            _context = context;
+            return NotFound();
         }
 
-        [BindProperty]
-        public Friend Friend { get; set; }
+        Friend = await Context.Friends.FirstOrDefaultAsync(m => m.Id == id);
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        if (Friend == null)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            return NotFound();
+        }
+        return Page();
+    }
 
-            Friend = await _context.Friends.FirstOrDefaultAsync(m => m.Id == id);
-
-            if (Friend == null)
-            {
-                return NotFound();
-            }
-            return Page();
+    public async Task<IActionResult> OnPostAsync(int? id)
+    {
+        if (id == null)
+        {
+            return NotFound();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        Friend = await Context.Friends.FindAsync(id);
+
+        if (Friend != null)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            Friend = await _context.Friends.FindAsync(id);
-
-            if (Friend != null)
-            {
-                _context.Friends.Remove(Friend);
-                await _context.SaveChangesAsync();
-            }
-
-            return RedirectToPage("./Index");
+            Context.Friends.Remove(Friend);
+            await Context.SaveChangesAsync();
         }
+
+        return RedirectToPage("./Index");
     }
 }

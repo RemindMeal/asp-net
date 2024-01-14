@@ -1,56 +1,50 @@
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using RemindMealData;
 using RemindMealData.Models;
 
-namespace RemindMeal.Pages.Meals
+namespace RemindMeal.Pages.Meals;
+
+public class DeleteModel : BaseDeleteModel
 {
-    public class DeleteModel : PageModel
+    public DeleteModel(RemindMealContext context) : base(context)
     {
-        private readonly RemindMealContext _context;
+    }
 
-        public DeleteModel(RemindMealContext context)
+    [BindProperty]
+    public Meal Meal { get; set; }
+
+    public async Task<IActionResult> OnGetAsync(int? id)
+    {
+        if (id == null)
         {
-            _context = context;
+            return NotFound();
         }
 
-        [BindProperty]
-        public Meal Meal { get; set; }
+        Meal = await Context.Meals.FirstOrDefaultAsync(m => m.Id == id);
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        if (Meal == null)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            return NotFound();
+        }
+        return Page();
+    }
 
-            Meal = await _context.Meals.FirstOrDefaultAsync(m => m.Id == id);
-
-            if (Meal == null)
-            {
-                return NotFound();
-            }
-            return Page();
+    public async Task<IActionResult> OnPostAsync(int? id)
+    {
+        if (id == null)
+        {
+            return NotFound();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        Meal = await Context.Meals.FindAsync(id);
+
+        if (Meal != null)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            Meal = await _context.Meals.FindAsync(id);
-
-            if (Meal != null)
-            {
-                _context.Meals.Remove(Meal);
-                await _context.SaveChangesAsync();
-            }
-
-            return RedirectToPage("./Index");
+            Context.Meals.Remove(Meal);
+            await Context.SaveChangesAsync();
         }
+
+        return RedirectToPage("./Index");
     }
 }
