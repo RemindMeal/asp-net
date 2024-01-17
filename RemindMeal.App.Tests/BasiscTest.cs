@@ -6,6 +6,8 @@ namespace RemindMeal.Tests
 {
     public sealed class BasicTests
     {
+        private readonly WebApplicationFactory<Program> factory = new();
+
         [Theory]
         [InlineData("/")]
         [InlineData("/Index")]
@@ -22,7 +24,6 @@ namespace RemindMeal.Tests
         [InlineData("/Identity/Account/Manage/PersonalData")]
         public async Task Get_EndpointsReturnSuccessAndCorrectContentType(string url)
         {
-            var factory = new WebApplicationFactory<Program>();
             // Arrange
             var client = factory.CreateClient();
 
