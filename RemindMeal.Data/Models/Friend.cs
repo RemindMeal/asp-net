@@ -5,9 +5,7 @@ namespace RemindMealData.Models;
 public sealed class Friend : IHasUser
 {
     public Friend()
-    {
-        Presences = new List<Presence>();
-    }
+    {}
 
     [Key]
     public int Id { get; set; }
@@ -25,7 +23,7 @@ public sealed class Friend : IHasUser
 
     // Relationships
     public User User { get; set; }
-    public ICollection<Presence> Presences { get; set; }
+    public ICollection<Presence> Presences { get; set; } = new List<Presence>();
 
     public override string ToString()
     {

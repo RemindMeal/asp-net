@@ -8,11 +8,9 @@ namespace RemindMealData.DependencyInjection;
 public static class ServicesInjectionExtensions
 {
     public static IServiceCollection AddRemindMealDbContext(
-        this IServiceCollection serviceCollection, Action<DbContextOptionsBuilder> optionsAction = null,
-        ServiceLifetime contextLifetime = ServiceLifetime.Scoped,
-        ServiceLifetime optionsLifetime = ServiceLifetime.Scoped)
+        this IServiceCollection serviceCollection, Action<DbContextOptionsBuilder> optionsAction = null)
     {
-        return serviceCollection.AddDbContext<RemindMealContext>(optionsAction, contextLifetime, optionsLifetime);
+        return serviceCollection.AddDbContextFactory<RemindMealContext>(optionsAction);
     }
 
     public static IdentityBuilder AddRemindMealEntityFrameworkStores(this IdentityBuilder builder)
