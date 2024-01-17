@@ -17,7 +17,7 @@ public static class ServicesInjectionExtensions
 
         var connectionString = configuration.GetConnectionString("db");
         Console.WriteLine($"connectionString = {connectionString}");        
-        return serviceCollection.AddDbContext<RemindMealContext>(options => options.UseNpgsql(connectionString));
+        return serviceCollection.AddDbContextFactory<RemindMealContext>(options => options.UseNpgsql(connectionString));
     }
 
     public static IdentityBuilder AddRemindMealEntityFrameworkStores(this IdentityBuilder builder)
