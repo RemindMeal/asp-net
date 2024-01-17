@@ -1,18 +1,11 @@
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using RemindMealData;
 using RemindMealData.Models;
 using RemindMeal.ModelViews;
-using RemindMeal.Pages.Friends;
 
 namespace RemindMeal.Pages.Recipes;
 
 public sealed class CreateModel : BaseCreateModel
 {
-    public CreateModel(RemindMealContext context, IMapper mapper) : base(context, mapper)
-    {
-    }
-
     public IActionResult OnGet()
     {
         RecipeModelView = new RecipeModelView();

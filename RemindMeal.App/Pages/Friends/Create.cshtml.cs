@@ -7,9 +7,6 @@ namespace RemindMeal.Pages.Friends;
 
 public sealed class CreateModel : BaseCreateModel
 {
-    public CreateModel(RemindMealContext context, IMapper mapper) : base(context, mapper)
-    {}
-
     public IActionResult OnGet()
     {
         return Page();
