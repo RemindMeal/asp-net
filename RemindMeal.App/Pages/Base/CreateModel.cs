@@ -1,5 +1,4 @@
 using AutoMapper;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using RemindMealData;
 
@@ -7,9 +6,12 @@ namespace RemindMeal.Pages;
 
 public class BaseCreateModel : PageModel
 {
-    [Inject]
-    protected RemindMealContext Context { get; init; }
+    public BaseCreateModel(RemindMealContext context, IMapper mapper)
+    {
+        Context = context;
+        Mapper = mapper;
+    }
 
-    [Inject]
+    protected RemindMealContext Context { get; init; }
     protected IMapper Mapper { get; init; }
 }
