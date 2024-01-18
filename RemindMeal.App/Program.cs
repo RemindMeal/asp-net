@@ -90,9 +90,7 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseEndpoints(endpoints => {
-    endpoints.MapRazorPages();
-});
+app.MapRazorPages();
 
 app.Run();
 
