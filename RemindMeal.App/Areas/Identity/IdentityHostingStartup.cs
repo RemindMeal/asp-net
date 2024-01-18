@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Hosting;
-
 [assembly: HostingStartup(typeof(RemindMeal.Areas.Identity.IdentityHostingStartup))]
 namespace RemindMeal.Areas.Identity
 {

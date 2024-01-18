@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using RemindMealData;
 using RemindMealData.Models;
 using RemindMeal.ModelViews;
-using RemindMeal.Pages.Friends;
 
 namespace RemindMeal.Pages.Meals;
 

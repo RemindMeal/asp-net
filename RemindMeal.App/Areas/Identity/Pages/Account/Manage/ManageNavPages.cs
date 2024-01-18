@@ -1,4 +1,3 @@
-using System;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace RemindMeal.Areas.Identity.Pages.Account.Manage

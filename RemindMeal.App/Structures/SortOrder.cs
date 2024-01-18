@@ -1,5 +1,3 @@
-using System;
-
 namespace RemindMeal.Structures
 {
     public enum SortOrder
