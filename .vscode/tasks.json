@@ -39,25 +39,40 @@
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "PostgreSQL Docker",
-            "command": "docker",
+            "label": "build",
+            "command": "dotnet",
+            "type": "process",
             "args": [
-                "run",
-                "--rm",
-                "--name",
-                "remindmeal",
-                "--env-file",
-                ".env",
-                "-p",
-                "5432:5432",
-                "-d",
-                "postgres:13"
+                "build",
+                "${workspaceFolder}/RemindMeal.sln",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary;ForceNoAlign"
             ],
-            "presentation": {
-                "echo": false,
-                "reveal": "silent"
-            },
-            "problemMatcher": []
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "publish",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "${workspaceFolder}/RemindMeal.sln",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary;ForceNoAlign"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "watch",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "run",
+                "--project",
+                "${workspaceFolder}/RemindMeal.sln"
+            ],
+            "problemMatcher": "$msCompile"
         }
     ]
 }

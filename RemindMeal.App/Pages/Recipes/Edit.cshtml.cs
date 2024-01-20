@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using RemindMealData;
+using RemindMealData.Models;
 using RemindMeal.ModelViews;
 
 namespace RemindMeal.Pages.Recipes
@@ -44,8 +45,10 @@ namespace RemindMeal.Pages.Recipes
 
             var recipeId = RecipeView.Id;
             var recipe = await _context.Recipes.SingleAsync(r => r.Id == recipeId);
-            
-            _context.Attach(recipe).State = EntityState.Modified;
+
+            recipe.Name = RecipeView.Name;
+            recipe.Description = RecipeView.Description;
+            recipe.Type = RecipeView.Type;
 
             try
             {
