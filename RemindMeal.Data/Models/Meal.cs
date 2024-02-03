@@ -14,8 +14,8 @@ public sealed class Meal : IHasUser
     // Relationships
     [Required]
     public User User { get; set; }
-    public ICollection<Presence> Presences { get; } = new List<Presence>();
-    public ICollection<Cooking> Cookings { get; } = new List<Cooking>();
+    public ICollection<Presence> Presences { get; } = [];
+    public ICollection<Cooking> Cookings { get; } = [];
 
     public override string ToString()
     {

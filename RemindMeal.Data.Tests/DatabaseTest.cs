@@ -2,80 +2,79 @@ using System.Collections.Immutable;
 using Microsoft.EntityFrameworkCore;
 using RemindMealData;
 using RemindMealData.Models;
-using RemindMeal.Services;
 
-public sealed class DatabaseTest
+namespace RemindMeal.Data.Tests;
+
+public class DatabaseTest
 {
-    private readonly DbContextOptions<RemindMealContext> _contextOptions = new DbContextOptionsBuilder<RemindMealContext>()
-        .UseSqlite("Data Source=TestDatabase.db")
-        .Options;
-    private static readonly User User = new();
-    private readonly IUserResolverService _userResolverService = new UserResolverServiceForTest(User);
-    private static readonly ImmutableArray<Friend> Friends =
+    readonly User user = new();
+
+    ImmutableArray<Friend> CreateFriends() =>
     [
         new Friend
             {
-                Name = "Jesika",
-                Surname = "Barisic",
-                User = User
+                Name = "Anita",
+                Surname = "Donea",
+                User = user
             },
         new Friend
         {
             Name = "Françoise",
             Surname = "Lafont",
-            User = User
+            User = user
         },
         new Friend
         {
             Name = "Brigitte",
             Surname = "Vernière",
-            User = User
+            User = user
         }
-,
     ];
 
-    private static readonly ImmutableArray<Recipe> Recipes =
+    RemindMealContext CreateContext()
+    {
+        return new RemindMealContext(
+            new DbContextOptionsBuilder<RemindMealContext>()
+                .UseSqlite("Data Source=TestDatabase.db")
+                .Options,
+            new UserResolverServiceForTest(user)
+        );
+    }
+
+    ImmutableArray<Recipe> CreateRecipes() =>
     [
         new Recipe
             {
                 Name = "Poulet aux olives",
                 Description = "Ben poulet avec des olives",
                 Type = RecipeType.Main,
-                User = User
+                User = user
             },
         new Recipe
         {
             Name = "Salade de noix",
             Description = string.Empty,
             Type = RecipeType.Starter,
-            User = User
+            User = user
         },
         new Recipe
         {
             Name = "Tiramisu",
             Description = "Dessert Italien à la crème de mascarpone et au café.",
             Type = RecipeType.Dessert,
-            User = User
+            User = user
         },
     ];
-
-    private class UserResolverServiceForTest(User user) : IUserResolverService
-    {
-        private readonly User _user = user;
-
-        public User GetCurrentSessionUser(RemindMealContext context) => _user;
-    }
-
-    private RemindMealContext CreateContext() => new(_contextOptions, _userResolverService);
     
     [Fact]
     public void CreateFriend()
     {
+        var Friends = CreateFriends();
         using (var context = CreateContext())
         {
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
-            context.Friends.AddRange(Friends);
+            context.Friends.AddRange(CreateFriends());
             context.SaveChanges();
         }
 
@@ -94,6 +93,7 @@ public sealed class DatabaseTest
     [Fact]
     public void CreateRecipe()
     {
+        var Recipes = CreateRecipes();
         using (var context = CreateContext())
         {
             context.Database.EnsureDeleted();
@@ -118,6 +118,8 @@ public sealed class DatabaseTest
     [Fact]
     public void CreateMeal()
     {
+        var Friends = CreateFriends();
+        var Recipes = CreateRecipes();
         var date = DateTime.Now;
         var recipesToAdd = new[] {0, 1}.Select(i => Recipes[i]).ToList();
         var friendsToAdd = new[] {0, 1, 2}.Select(i => Friends[i]).ToList();
@@ -129,7 +131,7 @@ public sealed class DatabaseTest
             var meal = new Meal
             {
                 Date = date,
-                User = User
+                User = user
             };
 
             foreach (var recipe in recipesToAdd)
@@ -151,7 +153,7 @@ public sealed class DatabaseTest
             }
 
             context.Add(meal);
-            Assert.Equal(13, context.SaveChanges());
+            Assert.Equal(12, context.SaveChanges());
         }
 
         using (var context = CreateContext())

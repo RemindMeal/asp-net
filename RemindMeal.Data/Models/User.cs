@@ -4,12 +4,7 @@ namespace RemindMealData.Models;
 
 public sealed class User : IdentityUser
 {
-    public User()
-    {
-        Recipes = new List<Recipe>();
-    }
-
-    public IList<Recipe> Recipes { get; set; }
+    public IList<Recipe> Recipes { get; set; } = [];
 
     public override string ToString()
     {

@@ -20,7 +20,7 @@ public class TestWebApplicationFactory : WebApplicationFactory<Program>
                 services.Remove(descriptor);
 
             services.AddDbContextFactory<RemindMealContext>(options =>
-                options.UseSqlite("Data Source=TestDatabase.db"));
+                options.UseSqlite("Data Source=TestApp.db"));
         });
         builder.UseEnvironment("Development");
     }
