@@ -6,7 +6,6 @@ using RemindMealData.Models;
 using RemindMeal.Services;
 using Microsoft.AspNetCore.HttpOverrides;
 using RemindMealData.DependencyInjection;
-using RemindMealData.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -71,7 +70,7 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
-    MigrationsServices.DBMigrate(app.Services);
+    // MigrationsServices.DBMigrate(app.Services);
     app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
