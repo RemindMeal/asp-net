@@ -15,6 +15,7 @@ internal class RemindMealContextFactory : IDesignTimeDbContextFactory<RemindMeal
 
         var builder = new DbContextOptionsBuilder<RemindMealContext>();
         var connectionString = configuration.GetConnectionString("db");
+        Console.WriteLine($"connectionString = {connectionString}");
         builder.UseNpgsql(connectionString);
 
         return new RemindMealContext(builder.Options);

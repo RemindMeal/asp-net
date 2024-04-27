@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
-using Microsoft.EntityFrameworkCore;
 using RemindMealData.Models;
 using RemindMeal.Services;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -17,11 +16,7 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
 });
 
 // Database
-builder.Services.AddRemindMealDbContext(options =>
-{
-    var connectionString = builder.Configuration.GetConnectionString("db");
-    options.UseNpgsql(connectionString);
-});
+builder.Services.AddRemindMealDbContext();
 
 // Exception filter
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();

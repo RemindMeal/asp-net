@@ -9,13 +9,11 @@
     },
     "tasks": [
         {
-            "label": ".NET CLI run",
+            "label": "Run RemindMeal",
             "command": "dotnet",
             "type": "shell",
             "args": [
                 "run",
-                "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary",
                 "--project",
                 "RemindMeal.App"
             ],
@@ -38,7 +36,7 @@
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "build",
+            "label": "Build RemindMeal",
             "command": "dotnet",
             "type": "process",
             "args": [
