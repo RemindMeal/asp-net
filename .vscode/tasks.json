@@ -7,6 +7,7 @@
         "panel": "dedicated",
         "clear": true
     },
+    "problemMatcher": "$msCompile",
     "tasks": [
         {
             "label": "Run RemindMeal",
@@ -20,8 +21,7 @@
             "group": {
                 "kind": "build",
                 "isDefault": false
-            },
-            "problemMatcher": "$msCompile"
+            }
         },
         {
             "label": "test",
@@ -32,20 +32,23 @@
             "group": {
                 "kind": "test",
                 "isDefault": true
-            },
-            "problemMatcher": "$msCompile"
+            }
         },
         {
-            "label": "Build RemindMeal",
+            "label": "Build",
             "command": "dotnet",
             "type": "process",
             "args": [
                 "build",
                 "${workspaceFolder}/RemindMeal.sln",
-                "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary;ForceNoAlign"
             ],
-            "problemMatcher": "$msCompile"
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "focus": true,
+            }
         },
         {
             "label": "publish",
@@ -54,22 +57,19 @@
             "args": [
                 "publish",
                 "${workspaceFolder}/RemindMeal.sln",
-                "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary;ForceNoAlign"
             ],
             "problemMatcher": "$msCompile"
         },
         {
             "label": "watch",
-            "command": "dotnet",
             "type": "process",
+            "command": "dotnet",
             "args": [
                 "watch",
                 "run",
                 "--project",
                 "${workspaceFolder}/RemindMeal.sln"
             ],
-            "problemMatcher": "$msCompile"
         }
     ]
 }
