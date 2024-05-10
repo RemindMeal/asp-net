@@ -3,34 +3,17 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RemindMealData.Models;
-using RemindMeal.Services;
+using RemindMealData.Services;
 
 namespace RemindMealData;
 
-public class RemindMealContext : IdentityDbContext<User>
+public class RemindMealContext(DbContextOptions<RemindMealContext> options, IUserResolverService userResolverService) : IdentityDbContext<User>(options)
 {
-    private readonly IUserResolverService _userResolverService;
-
-    public RemindMealContext(DbContextOptions<RemindMealContext> options)
-        : base(options)
-    {}
-
-    public RemindMealContext(DbContextOptions<RemindMealContext> options, IUserResolverService userResolverService)
-        : base(options)
-    {
-        _userResolverService = userResolverService;
-    }
-
     public DbSet<Recipe> Recipes { get; set; }
     public DbSet<Meal> Meals { get; set; }
     public DbSet<Friend> Friends { get; set; }
     public DbSet<Presence> Participations { get; set; }
     public DbSet<Cooking> Cookings { get; set; }
-
-    public User GetCurrentUser()
-    {
-        return _userResolverService.GetCurrentSessionUser(this);
-    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -67,8 +50,7 @@ public class RemindMealContext : IdentityDbContext<User>
         modelBuilder.Entity<Meal>().HasQueryFilter(m => m.User.Id == GetCurrentUser().Id);
     }
 
-
-    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         var user = GetCurrentUser();
         if (user is not null)
@@ -77,6 +59,11 @@ public class RemindMealContext : IdentityDbContext<User>
             ChangeTracker.ProcessCreation(user);
         }
         return await base.SaveChangesAsync(true, cancellationToken);
+    }
+
+    private User GetCurrentUser()
+    {
+        return userResolverService.GetCurrentSessionUser(this);
     }
 }
 

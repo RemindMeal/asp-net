@@ -1,12 +1,10 @@
 using RemindMealData;
 using RemindMealData.Models;
-using RemindMeal.Services;
+using RemindMealData.Services;
 
 namespace RemindMeal.Data.Tests;
 
 public class UserResolverServiceForTest(User user) : IUserResolverService
 {
-    private readonly User _user = user;
-
-    public User GetCurrentSessionUser(RemindMealContext context) => _user;
+    public User GetCurrentSessionUser(RemindMealContext context) => user;
 };

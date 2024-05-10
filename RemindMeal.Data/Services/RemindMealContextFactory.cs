@@ -18,6 +18,6 @@ internal class RemindMealContextFactory : IDesignTimeDbContextFactory<RemindMeal
         Console.WriteLine($"connectionString = {connectionString}");
         builder.UseNpgsql(connectionString);
 
-        return new RemindMealContext(builder.Options);
+        return new RemindMealContext(builder.Options, null);
     }
 }

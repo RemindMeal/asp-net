@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using RemindMealData.Models;
 using RemindMeal.Services;
 using Microsoft.AspNetCore.HttpOverrides;
 using RemindMealData.DependencyInjection;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,7 +50,7 @@ builder.Services
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 // User Resolver
-builder.Services.AddRemindMealDataServices();
+builder.Services.AddRemindMealDataUserResolverService();
 
 var app = builder.Build();
 
