@@ -23,7 +23,8 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 // Identity
 builder.Services
-    .AddDefaultIdentity<User>(options => { 
+    .AddDefaultIdentity<User>(options =>
+    {
         options.Password.RequireDigit = true;
         options.Password.RequireLowercase = true;
         options.Password.RequireNonAlphanumeric = false;
@@ -70,7 +71,7 @@ else
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 app.UseCookiePolicy();
@@ -89,3 +90,4 @@ app.MapRazorPages();
 app.Run();
 
 public partial class Program { }
+
